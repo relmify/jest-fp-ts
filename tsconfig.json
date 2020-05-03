@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "project": "./",
+    "rootDir": "./",
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "outDir": "out",
+    "lib": ["es2019"],
+    "strict": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": true
+  }
+}

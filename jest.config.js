@@ -1,8 +1,8 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['/node_modules/', '/out/'],
-  coverageDirectory: './out/coverage',
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  coverageDirectory: './dist/coverage',
   coveragePathIgnorePatterns: ['/node_modules/'],
   setupFilesAfterEnv: ['./jest.setup.js'],
   watchPlugins: [

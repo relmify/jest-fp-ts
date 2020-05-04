@@ -1,9 +1,9 @@
 {
   "files.exclude": {
-    "out": false
+    "dist": false
   },
   "search.exclude": {
-    "out": true,
+    "dist": true,
     "package-lock.json": true
   },
   "typescript.tsc.autoDetect": "on",

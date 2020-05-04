@@ -1,0 +1,10 @@
+# Source files
+src/
+
+# Test files
+**/__tests__/**
+
+# Configuraton files
+.*
+jest*.*
+tsconfig.json

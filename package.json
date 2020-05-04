@@ -1,12 +1,16 @@
 {
-  "name": "jest-fp-ts",
+  "name": "@relmify/jest-fp-ts",
   "version": "1.0.0",
-  "description": "Additional Jest matchers for projects using using fp-ts and the fp-ts ecosystem",
-  "main": "index.js",
+  "description": "Custom Jest matchers for projects using using fp-ts and io-ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "jest",
     "matchers",
-    "fp-ts"
+    "fp-ts",
+    "io-ts",
+    "typescript",
+    "functional"
   ],
   "repository": {
     "type": "git",
@@ -19,15 +23,17 @@
   },
   "homepage": "https://github.com/relmify/jest-fp-ts#readme",
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "tsc",
+    "watch": "tsc -watch",
     "clean": "npm-run-all clean:**",
-    "clean:out": "rimraf out",
+    "clean:dist": "rimraf dist",
     "clean:jest-cache": "jest --clear-cache --bail 0",
-    "check-lint": "eslint ./src --ext .ts",
-    "check-prettier": "prettier --check \"src/**/*.ts\"",
+    "lint:check": "eslint ./src --ext .ts",
+    "lint:fix": "eslint --fix ./src --ext .ts",
+    "prettier:check": "prettier --check \"src/**/*.ts\"",
+    "prettier:fix": "prettier --write \"src/**/*.ts\"",
     "test": "jest",
-    "testwatch": "jest --watch"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "expect": "^25.5.0",

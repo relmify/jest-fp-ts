@@ -3,10 +3,10 @@ import { toBeLeft } from './toBeLeft';
 import { toBeRight } from './toBeRight';
 import { toEqualLeft } from './toEqualLeft';
 import { toEqualRight } from './toEqualRight';
-import { toMatchLeft } from './toMatchLeft';
-import { toMatchLeftObject } from './toMatchLeftObject';
-import { toMatchRight } from './toMatchRight';
-import { toMatchRightObject } from './toMatchRightObject';
+import { toStrictEqualLeft } from './toStrictEqualLeft';
+import { toStrictEqualRight } from './toStrictEqualRight';
+import { toSubsetEqualLeft } from './toSubsetEqualLeft';
+import { toSubsetEqualRight } from './toSubsetEqualRight';
 import { toBeLeftWithErrorsMatching } from './toBeLeftWithErrorsMatching';
 
 const matchers = {
@@ -15,10 +15,10 @@ const matchers = {
   toBeRight,
   toEqualLeft,
   toEqualRight,
-  toMatchLeft,
-  toMatchLeftObject,
-  toMatchRight,
-  toMatchRightObject,
+  toStrictEqualLeft,
+  toStrictEqualRight,
+  toSubsetEqualLeft,
+  toSubsetEqualRight,
   toBeLeftWithErrorsMatching,
 };
 

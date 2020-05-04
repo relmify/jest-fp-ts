@@ -21,6 +21,9 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "clean": "npm-run-all clean:**",
+    "clean:out": "rimraf out",
+    "clean:jest-cache": "jest --clear-cache --bail 0",
     "check-lint": "eslint ./src --ext .ts",
     "check-prettier": "prettier --check \"src/**/*.ts\"",
     "test": "jest",

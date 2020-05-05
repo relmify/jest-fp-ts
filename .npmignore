@@ -8,3 +8,6 @@ src/
 .*
 jest*.*
 tsconfig.json
+
+# Debug files
+**/*.map

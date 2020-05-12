@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": false
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "**/__tests__/*"]
 }

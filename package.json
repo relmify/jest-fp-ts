@@ -7,7 +7,6 @@
   "files": [
     "/dist",
     "/types",
-    "!**/__tests__",
     "!**/*.map"
   ],
   "keywords": [

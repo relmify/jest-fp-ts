@@ -3,16 +3,16 @@ import { Either } from 'fp-ts/lib/Either';
 import { applyPredicateLeft, subsetEquals } from '../../predicates';
 import { diffReceivedLeft } from '../../either/print';
 
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
-    }
-    interface Expect {
-      readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
-    }
-  }
-}
+// declare global {
+//   namespace jest {
+//     interface Matchers<R> {
+//       readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
+//     }
+//     interface Expect {
+//       readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
+//     }
+//   }
+// }
 
 const passMessage = <L>(expected: L) => () =>
   matcherHint('.not.toSubsetEqualLeft', 'received', 'expectedLeft') +
@@ -39,10 +39,7 @@ const failMessage = <L>(received: Either<L, unknown>, expected: L) => () => {
  * and that each object in the received array has a subset of properties equal to
  * to the properties in the corresponding expected object.
  */
-export const toSubsetEqualLeft = <L>(
-  received: Either<L, unknown>,
-  expected: L,
-): jest.CustomMatcherResult => {
+export const toSubsetEqualLeft = <L>(received: Either<L, unknown>, expected: L): any => {
   const predicate = subsetEquals(expected);
   const pass = applyPredicateLeft(predicate as (value: unknown) => boolean)(received);
 

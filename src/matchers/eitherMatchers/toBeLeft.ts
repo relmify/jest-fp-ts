@@ -1,16 +1,16 @@
 import { matcherHint } from 'jest-matcher-utils';
 import { Either, isLeft } from 'fp-ts/lib/Either';
 
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      readonly toBeLeft: () => CustomMatcherResult;
-    }
-    interface Expect {
-      readonly toBeLeft: () => CustomMatcherResult;
-    }
-  }
-}
+// declare global {
+//   namespace jest {
+//     interface Matchers<R> {
+//       readonly toBeLeft: () => R;
+//     }
+//     interface Expect {
+//       readonly toBeLeft: () => any;
+//     }
+//   }
+// }
 
 const passMessage = () => () =>
   matcherHint('.not.toBeLeft', 'received', '') +
@@ -23,7 +23,7 @@ const failMessage = () => () =>
 /**
  * Check that the supplied Either is a Left
  */
-export const toBeLeft = (received: Either<unknown, unknown>): jest.CustomMatcherResult => {
+export const toBeLeft = (received: Either<unknown, unknown>): any => {
   const pass: boolean = isLeft(received);
   return {
     pass,

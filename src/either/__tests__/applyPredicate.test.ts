@@ -1,5 +1,5 @@
 import { left, right } from 'fp-ts/lib/Either';
-import { applyPredicate, applyPredicateLeft, isTruthy } from '../../predicates/index';
+import { applyPredicate, applyPredicateLeft, isTruthy } from '../../predicates';
 
 describe('applyPredicate', () => {
   test('returns true if the received value is a right and the predicate evaluates to true when applied to the value', () => {

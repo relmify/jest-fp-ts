@@ -1,16 +1,16 @@
 import { matcherHint } from 'jest-matcher-utils';
 import { Either, isRight } from 'fp-ts/lib/Either';
 
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      readonly toBeRight: () => CustomMatcherResult;
-    }
-    interface Expect {
-      readonly toBeRight: () => CustomMatcherResult;
-    }
-  }
-}
+// declare global {
+//   namespace jest {
+//     interface Matchers<R> {
+//       readonly toBeRight: () => R;
+//     }
+//     interface Expect {
+//       readonly toBeRight: () => any;
+//     }
+//   }
+// }
 
 /* istanbul ignore next */
 const passMessage = () => () =>
@@ -27,7 +27,7 @@ const failMessage = () => () =>
 /**
  * Checked that the supplied Either is a Right
  */
-export const toBeRight = (received: Either<unknown, unknown>): jest.CustomMatcherResult => {
+export const toBeRight = (received: Either<unknown, unknown>): any => {
   const pass = isRight(received);
 
   return {

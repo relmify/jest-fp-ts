@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Custom Jest matchers for projects using using fp-ts and io-ts",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "/dist",
+    "/types",
     "!**/__tests__",
     "!**/*.map"
   ],

@@ -1,5 +1,5 @@
-import eitherMatchers from './eitherMatchers';
+import { matchers as eitherMatchers } from './eitherMatchers';
 
 const matchers = { ...eitherMatchers };
 
-export default matchers;
+export { matchers };

@@ -3,16 +3,16 @@ import { Either } from 'fp-ts/lib/Either';
 import { applyPredicateLeft, strictEquals } from '../../predicates';
 import { diffReceivedLeft } from '../../either/print';
 
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      readonly toStrictEqualLeft: (expected: unknown) => CustomMatcherResult;
-    }
-    interface Expect {
-      readonly toStrictEqualLeft: (expected: unknown) => CustomMatcherResult;
-    }
-  }
-}
+// declare global {
+//   namespace jest {
+//     interface Matchers<R> {
+//       readonly toStrictEqualLeft: (expected: unknown) => CustomMatcherResult;
+//     }
+//     interface Expect {
+//       readonly toStrictEqualLeft: (expected: unknown) => CustomMatcherResult;
+//     }
+//   }
+// }
 
 const passMessage = <L>(expected: L) => () =>
   matcherHint('.not.toStrictEqualLeft', 'received', 'expectedLeft') +
@@ -33,10 +33,7 @@ const failMessage = <L>(received: Either<L, unknown>, expected: L) => () => {
 /**
  * Check that the supplied Either is a Left that equals an expected value
  */
-export const toStrictEqualLeft = <L>(
-  received: Either<L, unknown>,
-  expected: L,
-): jest.CustomMatcherResult => {
+export const toStrictEqualLeft = <L>(received: Either<L, unknown>, expected: L): any => {
   const predicate = strictEquals(expected);
   const pass = applyPredicateLeft(predicate as (value: unknown) => boolean)(received);
 

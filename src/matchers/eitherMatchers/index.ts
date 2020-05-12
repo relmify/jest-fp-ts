@@ -21,5 +21,4 @@ const matchers = {
   toSubsetEqualRight,
   toBeLeftWithErrorsMatching,
 };
-
-export default matchers;
+export { matchers };

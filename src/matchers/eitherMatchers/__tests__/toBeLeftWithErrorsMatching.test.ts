@@ -1,5 +1,5 @@
 import * as t from 'io-ts';
-import matchers from '../index';
+import { matchers } from '../index';
 
 expect.extend(matchers);
 

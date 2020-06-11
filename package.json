@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/relmify/jest-fp-ts#readme",
   "scripts": {
-    "compile": "tsc",
+    "build": "tsc",
     "watch": "tsc -watch",
     "clean": "npm-run-all clean:**",
     "clean:dist": "rimraf dist",

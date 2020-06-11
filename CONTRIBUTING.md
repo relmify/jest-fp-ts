@@ -1,8 +1,8 @@
 # Contributing to jest-fp-ts
 
 I created this project for my own use, with the idea that at some point it might become a
-fully-maintained community project, complete with ci builds, issue templates, cool badges, and
-better documentation.
+fully-maintained community project, complete with ci builds, cool badges, and better
+documentation.
 
 I'm also only just getting started with fp-ts and io-ts, so I haven't needed to create many
 different types of matchers yet. In fact, only Either values are represented at this point. It

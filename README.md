@@ -1,10 +1,10 @@
 # Jest Matchers for the fp-ts ecosystem
 
-Jest matchers for projects using fp-ts and io-ts.
+Jest matchers for projects using `fp-ts` and `io-ts`.
 
 ## Problem
 
-If your TypeScript project is written in a functional programming style using fp-ts and io-ts, many
+If your TypeScript project is written in a functional programming style using `fp-ts` and `io-ts`, many
 of the values you'll want to check in your unit tests will come wrapped inside container types like
 Either, Option, or These. Jest has no awareness of these container types and no built-in matchers to
 help you to compare wrapped values against un-wrapped values. This leaves you with two options:
@@ -17,13 +17,85 @@ writing your tests, and making it harder to read and maintain them.
 
 ## Solution
 
-jest-fp-ts aims to add additional matchers to Jest's default ones, making it easier to test code
-that makes use of fp-ts functional containers.
+`@relmify/jest-fp-ts` aims to add additional matchers to Jest's default ones, making it easier to test code
+that makes use of `fp-ts` functional containers.
 
-## Contributing
+## Installation
 
-If you've come here to help contribute - Thanks! Take a look at [contributing](/CONTRIBUTING.md) to
-see how to get started.
+With npm:
+
+```sh
+npm install -D @relmify/jest-fp-ts
+```
+
+With yarn:
+
+```sh
+yarn add -D @relmify/jest-fp-ts
+```
+
+## Setup
+
+Add `@relmify/jest-fp-ts` to your Jest `setupFilesAfterEnv` configuration.
+
+See [jest documentation](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array) for additional help.
+
+### Setup with package.json
+
+In your `package.json` file add:
+
+```json
+"jest": {
+  "setupFilesAfterEnv": ["@relmify/jest-fp-ts"]
+}
+```
+
+### Setup with jest.config.js
+
+Instead of configuring jest using `package.json`, you can use a `jest.config.js` file to specify the `setupFilesAfterEnv` configuration. There you can specify a setup file such as `./jest.setup.js` that will require `@relmify/jest-fp-ts`:
+
+```js
+// jest.config.js
+module.exports = {
+  setupFilesAfterEnv: ['./jest.setup.js'],
+};
+```
+
+```js
+// jest.setup.js
+require('@relmify/jest-fp-ts');
+```
+
+If you are using other jest custom matcher packages too, you can `require` them in the same `jest.setup.js` file.
+
+### Typescript Editor Support
+
+If your editor does not recognise the custom `@relmify/jest-fp-ts` matchers, add a `global.d.ts` file to your project with:
+
+```ts
+import '@relmify/jest-fp-ts';
+```
+
+---
+
+- [Problem](#problem)
+- [Solution](#solution)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Matchers](#matchers)
+  - [.toBeEither())](#toBeEither)
+  - [.toBeLeft())](#toBeLeft)
+  - [.toBeLeftWithErrorsMatching(value)](#toBeLeftWithErrorsMatchingValue)
+  - [.toBeRight())](#toBeRight)
+  - [.toEqualLeft(value))](#toEqualLeftValue)
+  - [.toEqualRight(value))](#toEqualRightValue)
+  - [.toStrictEqualLeft(value))](#toStrictEqualLeftValue)
+  - [.toStrictEqualRight(value))](#toStrictEqualRightValue)
+  - [.toSubsetEqualLeft(value))](#toSubsetEqualLeftValue)
+  - [.toSubsetEqualRight(value))](#toSubsetEqualRightValue)
+- [Asymmetric matchers](#asymmetric-matchers)
+- [LICENSE](#license)
+- [Contributing](#contributing)
 
 ## Matchers
 
@@ -79,35 +151,35 @@ Use `.toEqualLeft(value)` to check if a value is a Left that contains a value th
 expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
 documentationfor information about how the `.toEqual()` comparison works.
 
-### toEqualRight
+### toEqualRight(value)
 
-Use `.toEqualRight(expected)` to check if a value is a Right that contains a value that equals an
+Use `.toEqualRight(value)` to check if a value is a Right that contains a value that equals an
 expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
 documentationfor information about how the `.toEqual()` comparison works.
 
-### toStrictEqualLeft
+### toStrictEqualLeft(value)
 
-Use `.toStrictEqualLeft(expected)` to check if a value is a Left that contains a value that strictly
+Use `.toStrictEqualLeft(value)` to check if a value is a Left that contains a value that strictly
 equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
-### toStrictEqualRight
+### toStrictEqualRight(value)
 
-Use `.toStrictEqualRight(expected)` to check if a value is a Right that contains a value that
+Use `.toStrictEqualRight(value)` to check if a value is a Right that contains a value that
 strictly equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
-### toSubsetEqualLeft
+### toSubsetEqualLeft(value)
 
-Use `.toSubsetEqualLeft(expected)` to check if a value is a Left that contains an object with a
+Use `.toSubsetEqualLeft(value)` to check if a value is a Left that contains an object with a
 subset of properties that match the expected object properties. The received value must contain all
 of the expected properties, and may contain more than the expected properties.
 
-### toSubsetEqualRight
+### toSubsetEqualRight(value)
 
-Use `.toSubsetEqualRight(expected)` to check if a value is a Right that contains an object with a
+Use `.toSubsetEqualRight(value)` to check if a value is a Right that contains an object with a
 subset of properties that match the expected object properties. The received value must contain all
 of the expected properties, and may contain more than the expected properties.
 
@@ -135,3 +207,12 @@ test('if called with an asymmetric matcher', () => {
   );
 });
 ```
+
+## LICENSE
+
+[MIT](/LICENSE)
+
+## Contributing
+
+If you've come here to help contribute - Thanks! Take a look at [contributing](/CONTRIBUTING.md) to
+see how to get started.

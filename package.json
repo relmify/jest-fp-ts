@@ -38,7 +38,8 @@
     "prettier:check": "prettier --check \"src/**/*.ts\"",
     "prettier:fix": "prettier --write \"src/**/*.ts\"",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run lint:check && npm run prettier:check && npm ci && npm test && npm run build"
   },
   "dependencies": {
     "expect": "^25.5.0",

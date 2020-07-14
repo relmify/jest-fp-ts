@@ -18,8 +18,8 @@ describe('.toBeRight should fail', () => {
   });
 });
 
-describe('not.toBeRight', () => {
-  test('should fail if the received object is a Left', () => {
+describe('not.toBeRight should pass', () => {
+  test('if the received object is a Left', () => {
     expect(left('Left')).not.toBeRight();
   });
 });

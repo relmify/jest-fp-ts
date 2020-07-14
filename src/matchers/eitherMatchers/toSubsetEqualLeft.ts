@@ -1,18 +1,8 @@
 import { matcherHint, printExpected } from 'jest-matcher-utils';
 import { Either } from 'fp-ts/lib/Either';
-import { applyPredicateLeft, subsetEquals } from '../../predicates';
+import { applyPredicateLeft } from '../../either/applyPredicate';
+import { subsetEquals } from '../../predicates';
 import { diffReceivedLeft } from '../../either/print';
-
-// declare global {
-//   namespace jest {
-//     interface Matchers<R> {
-//       readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
-//     }
-//     interface Expect {
-//       readonly toSubsetEqualLeft: (expected: unknown) => CustomMatcherResult;
-//     }
-//   }
-// }
 
 const passMessage = <L>(expected: L) => () =>
   matcherHint('.not.toSubsetEqualLeft', 'received', 'expectedLeft') +

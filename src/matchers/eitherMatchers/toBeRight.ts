@@ -1,17 +1,6 @@
 import { matcherHint } from 'jest-matcher-utils';
 import { Either, isRight } from 'fp-ts/lib/Either';
 
-// declare global {
-//   namespace jest {
-//     interface Matchers<R> {
-//       readonly toBeRight: () => R;
-//     }
-//     interface Expect {
-//       readonly toBeRight: () => any;
-//     }
-//   }
-// }
-
 /* istanbul ignore next */
 const passMessage = () => () =>
   matcherHint('.not.toBeRight', 'received', '') +

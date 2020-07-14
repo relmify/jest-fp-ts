@@ -1,18 +1,8 @@
 import { matcherHint, printExpected } from 'jest-matcher-utils';
 import { Either } from 'fp-ts/lib/Either';
-import { applyPredicate, strictEquals } from '../../predicates';
+import { applyPredicate } from '../../either/applyPredicate';
+import { strictEquals } from '../../predicates';
 import { diffReceivedRight } from '../../either/print';
-
-// declare global {
-//   namespace jest {
-//     interface Matchers<R> {
-//       readonly toStrictEqualRight: (expected: unknown) => CustomMatcherResult;
-//     }
-//     interface Expect {
-//       readonly toStrictEqualRight: (expected: unknown) => CustomMatcherResult;
-//     }
-//   }
-// }
 
 const passMessage = <R>(expected: R) => () =>
   matcherHint('.not.toStrictEqualRight', 'received', 'expectedRight') +

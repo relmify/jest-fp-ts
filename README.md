@@ -83,31 +83,41 @@ import '@relmify/jest-fp-ts';
 - [Installation](#installation)
 - [Setup](#setup)
 - [Matchers](#matchers)
-  - [.toBeEither()](#toBeEither)
-  - [.toBeLeft()](#toBeLeft)
-  - [.toBeLeftWithErrorsMatching(value)](#toBeLeftWithErrorsMatchingValue)
-  - [.toBeRight()](#toBeRight)
-  - [.toEqualLeft(value)](#toEqualLeftValue)
-  - [.toEqualRight(value)](#toEqualRightValue)
-  - [.toStrictEqualLeft(value)](#toStrictEqualLeftValue)
-  - [.toStrictEqualRight(value)](#toStrictEqualRightValue)
-  - [.toSubsetEqualLeft(value)](#toSubsetEqualLeftValue)
-  - [.toSubsetEqualRight(value)](#toSubsetEqualRightValue)
+  - [Either Matchers](#eitherMatchers)
+    - [.toBeEither()](#toBeEither)
+    - [.toBeLeft()](#toBeLeft)
+    - [.toBeLeftWithErrorsMatching(value)](#toBeLeftWithErrorsMatchingValue)
+    - [.toBeRight()](#toBeRight)
+    - [.toEqualLeft(value)](#toEqualLeftValue)
+    - [.toEqualRight(value)](#toEqualRightValue)
+    - [.toStrictEqualLeft(value)](#toStrictEqualLeftValue)
+    - [.toStrictEqualRight(value)](#toStrictEqualRightValue)
+    - [.toSubsetEqualLeft(value)](#toSubsetEqualLeftValue)
+    - [.toSubsetEqualRight(value)](#toSubsetEqualRightValue)
+  - [Option Matchers](#optionMatchers)
+    - [.toBeNone()](#toBeNone)
+    - [.toBeOption()](#toBeOption)
+    - [.toBeSome()](#toBeSome)
+    - [.toEqualSome(value)](#toEqualSomeValue)
+    - [.toStrictEqualSome(value)](#toStrictEqualSomeValue)
+    - [.toSubsetEqualSome(value)](#toSubsetEqualSomeValue)
 - [Asymmetric matchers](#asymmetric-matchers)
 - [LICENSE](#license)
 - [Contributing](#contributing)
 
 ## Matchers
 
-### .toBeEither()
+### Either Matchers
+
+#### .toBeEither()
 
 Use `.toBeEither()` to check if a value is an Either (either a Left or a Right).
 
-### .toBeLeft()
+#### .toBeLeft()
 
 Use `.toBeLeft()` to check if a value is a Left.
 
-### .toBeLeftWithErrorsMatching(value)
+#### .toBeLeftWithErrorsMatching(value)
 
 Use `.toBeLeftWithErrorsMatching(value)` when testing errors returned from io-ts codec `decode()`
 operations.
@@ -141,45 +151,78 @@ test('if the received is a Left that contains errors matching the expected value
 });
 ```
 
-### .toBeRight()
+#### .toBeRight()
 
 Use `.toBeRight()` to check if a value is a Right.
 
-### .toEqualLeft(value)
+#### .toEqualLeft(value)
 
 Use `.toEqualLeft(value)` to check if a value is a Left that contains a value that equals an
 expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
 documentationfor information about how the `.toEqual()` comparison works.
 
-### toEqualRight(value)
+#### .toEqualRight(value)
 
 Use `.toEqualRight(value)` to check if a value is a Right that contains a value that equals an
 expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
 documentationfor information about how the `.toEqual()` comparison works.
 
-### toStrictEqualLeft(value)
+#### .toStrictEqualLeft(value)
 
 Use `.toStrictEqualLeft(value)` to check if a value is a Left that contains a value that strictly
 equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
-### toStrictEqualRight(value)
+#### .toStrictEqualRight(value)
 
 Use `.toStrictEqualRight(value)` to check if a value is a Right that contains a value that
 strictly equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
-### toSubsetEqualLeft(value)
+#### .toSubsetEqualLeft(value)
 
 Use `.toSubsetEqualLeft(value)` to check if a value is a Left that contains an object with a
 subset of properties that match the expected object properties. The received value must contain all
 of the expected properties, and may contain more than the expected properties.
 
-### toSubsetEqualRight(value)
+#### .toSubsetEqualRight(value)
 
 Use `.toSubsetEqualRight(value)` to check if a value is a Right that contains an object with a
+subset of properties that match the expected object properties. The received value must contain all
+of the expected properties, and may contain more than the expected properties.
+
+### Option Matchers
+
+#### .toBeNone()
+
+Use `.toBeNone()` to check if a value is a None.
+
+#### .toBeOption()
+
+Use `.toBeOption()` to check if a value is a Option (either a Some or a None).
+
+#### .toBeSome()
+
+Use `.toBeSome()` to check if a value is a Some.
+
+#### .toEqualSome(value)
+
+Use `.toEqualSome(value)` to check if a value is a Some that contains a value that equals an
+expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
+documentationfor information about how the `.toEqual()` comparison works.
+
+#### .toStrictEqualSome(value)
+
+Use `.toStrictEqualSome(value)` to check if a value is a Some that contains a value that
+strictly equals an expected value. See Jest's
+[toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
+information about how `.toStrictEqual()` differs from `toEqual()`.
+
+#### .toSubsetEqualSome(value)
+
+Use `.toSubsetEqualSome(value)` to check if a value is a Some that contains an object with a
 subset of properties that match the expected object properties. The received value must contain all
 of the expected properties, and may contain more than the expected properties.
 

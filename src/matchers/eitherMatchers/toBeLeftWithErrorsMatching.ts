@@ -5,17 +5,6 @@ import { Either } from 'fp-ts/lib/Either';
 import { containsMatches } from '../../predicates';
 import { pipe } from 'fp-ts/lib/pipeable';
 
-// declare global {
-//   namespace jest {
-//     interface Matchers<R> {
-//       readonly toBeLeftWithErrorsMatching: (expected: unknown) => R;
-//     }
-//     interface Expect {
-//       readonly toBeLeftWithErrorsMatching: (expected: unknown) => any;
-//     }
-//   }
-// }
-
 const passMessage = (received: Either<t.Errors, unknown>, expected: Array<string | RegExp>) => () =>
   matcherHint('.not.toBeLeftWithErrorsMatching', 'received', 'expectedLeftErrorsMatching') +
   '\n\n' +

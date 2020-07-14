@@ -1,23 +1,23 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
-import { isEither } from '../../predicates';
+import { isOption } from '../../predicates';
 
 const passMessage = (received: unknown) => () =>
-  matcherHint('.not.toBeEither', 'received', '') +
+  matcherHint('.not.toBeOption', 'received', '') +
   '\n\n' +
-  'Unexpected Either, received:\n' +
+  'Unexpected Option, received:\n' +
   `  ${printReceived(received)}`;
 
 const failMessage = (received: unknown) => () =>
-  matcherHint('.toBeEither', 'received', '') +
+  matcherHint('.toBeOption', 'received', '') +
   '\n\n' +
-  'Expected Either, received:\n' +
+  'Expected Option, received:\n' +
   `  ${printReceived(received)}`;
 
 /**
- * Matches if the received value is an Either
+ * Matches if the received value is an Option
  */
-export const toBeEither = (received: unknown): any => {
-  const pass = isEither(received);
+export const toBeOption = (received: unknown): any => {
+  const pass = isOption(received);
   return {
     pass,
     message: pass ? passMessage(received) : failMessage(received),

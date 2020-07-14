@@ -1,5 +1,7 @@
+/** Code in this file was copied from io-ts-types/src/either.ts */
 import * as t from 'io-ts';
 import { Either } from 'fp-ts/lib/Either';
+
 const leftLiteral = t.literal('Left');
 const rightLiteral = t.literal('Right');
 

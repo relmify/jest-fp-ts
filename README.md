@@ -34,6 +34,23 @@ With yarn:
 yarn add -D @relmify/jest-fp-ts
 ```
 
+You also need both `fp-ts` and `io-ts` installed in your project. If you're
+here, presumably you're already using `fp-ts`. Not every `fp-ts` project uses
+`io-ts` though. If you aren't using `io-ts` in your project, simply install it as
+a development dependency.
+
+With npm:
+
+```sh
+npm install -D io-ts
+```
+
+With yarn:
+
+```sh
+yarn add -D io-ts
+```
+
 ## Setup
 
 Add `@relmify/jest-fp-ts` to your Jest `setupFilesAfterEnv` configuration.

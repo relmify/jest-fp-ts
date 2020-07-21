@@ -3,11 +3,11 @@ import { printExpected, printReceived, diff } from 'jest-matcher-utils';
 import { hasProperty } from '../predicates';
 
 export const determinePropertyMessage = (
-  value: any,
+  value: unknown,
   property: PropertyKey,
   message = 'Not Accessible',
 ): string => {
-  return hasProperty(property)(value) ? value[property] : message;
+  return hasProperty(property)(value) ? (value as any)[property] : message;
 };
 
 /**

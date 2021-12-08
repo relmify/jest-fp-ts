@@ -1,6 +1,8 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { matchers } from '../index';
+import { stripAnsi } from '../../../serializers';
 
+expect.addSnapshotSerializer(stripAnsi);
 expect.extend(matchers);
 
 describe('.toBeOption should pass', () => {
@@ -17,7 +19,11 @@ describe('.toBeOption should pass', () => {
 
 describe('.toBeOption should fail', () => {
   test('if received is neither a Some nor a None', () => {
-    expect(() => expect('none').toBeOption()).toThrowError();
+    expect(() => expect(undefined).toBeOption()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toBeOption()
+
+      Received: undefined
+    `);
   });
 });
 
@@ -35,9 +41,17 @@ describe('.not.toBeOption should pass', () => {
 
 describe('.not.toBeOption should fail', () => {
   test('if received is a none', () => {
-    expect(() => expect(none).not.toBeOption()).toThrowError();
+    expect(() => expect(none).not.toBeOption()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toBeOption()
+
+      Received a None
+    `);
   });
   test('if received is a some', () => {
-    expect(() => expect(some('some')).not.toBeOption()).toThrowError();
+    expect(() => expect(some('some')).not.toBeOption()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toBeOption()
+
+      Received Some: "some"
+    `);
   });
 });

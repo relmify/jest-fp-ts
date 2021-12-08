@@ -1,6 +1,8 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { matchers } from '../index';
+import { stripAnsi } from '../../../serializers';
 
+expect.addSnapshotSerializer(stripAnsi);
 expect.extend(matchers);
 
 describe('.toBeSome', () => {

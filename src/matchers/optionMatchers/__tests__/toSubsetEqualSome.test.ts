@@ -1,6 +1,8 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { matchers } from '../index';
+import { stripAnsi } from '../../../serializers';
 
+expect.addSnapshotSerializer(stripAnsi);
 expect.extend(matchers);
 
 describe('.toSubsetEqualSome should pass', () => {
@@ -17,13 +19,13 @@ describe('.toSubsetEqualSome should pass', () => {
     expect(some(null)).toSubsetEqualSome(null);
   });
   test('if called as an asymmetric matcher', () => {
-    expect(some('People who are truly strong lift others up.')).toEqual(
-      expect.toSubsetEqualSome('People who are truly strong lift others up.'),
+    expect(some('Any sufficiently advanced technology is equivalent to magic.')).toEqual(
+      expect.toSubsetEqualSome('Any sufficiently advanced technology is equivalent to magic.'),
     );
   });
   test('if called with an asymmetric matcher', () => {
-    expect(some('People who are truly powerful bring others together.')).toSubsetEqualSome(
-      expect.stringContaining('powerful'),
+    expect(some('You affect the world by what you browse.')).toSubsetEqualSome(
+      expect.stringContaining('world'),
     );
   });
 });
@@ -32,7 +34,19 @@ describe('.toSubsetEqualSome should fail', () => {
   test('if the received is a Some that does not contain all of the expected properties', () => {
     expect(() =>
       expect(some({ orderNumber: 100 })).toSubsetEqualSome({ orderId: '123', orderNumber: 100 }),
-    ).toThrowError();
+    ).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Difference from Some:
+
+      - Expected
+      + Received
+
+        Object {
+      -   "orderId": "123",
+          "orderNumber": 100,
+        }
+    `);
   });
   test('if the received is a Some with an array of objects that does not contain all of the expected objects', () => {
     expect(() =>
@@ -41,7 +55,26 @@ describe('.toSubsetEqualSome should fail', () => {
         { b: 'b' },
         { c: 'c' },
       ]),
-    ).toThrowError();
+    ).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Difference from Some:
+
+      - Expected
+      + Received
+
+        Array [
+          Object {
+            "a": "a",
+          },
+          Object {
+            "b": "b",
+          },
+      -   Object {
+      -     "c": "c",
+      -   },
+        ]
+    `);
   });
   test('if the received is a Some with an array of objects that contains more than the expected objects', () => {
     expect(() =>
@@ -49,13 +82,66 @@ describe('.toSubsetEqualSome should fail', () => {
         { a: 'a' },
         { b: 'b' },
       ]),
-    ).toThrowError();
+    ).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Difference from Some:
+
+      - Expected
+      + Received
+
+        Array [
+          Object {
+            "a": "a",
+          },
+          Object {
+            "b": "b",
+          },
+      +   Object {
+      +     "c": "c",
+      +   },
+        ]
+    `);
   });
   test('if received is a None', () => {
-    expect(() => expect(none).toSubsetEqualSome('Some')).toThrowError();
+    expect(() => expect(none).toSubsetEqualSome('Some')).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Expected Some: "Some"
+      Received a None
+    `);
   });
   test('if received is a Some that does not equal the expected value', () => {
-    expect(() => expect(some('another Some')).toSubsetEqualSome('Some')).toThrowError();
+    expect(() => expect(some('another Some')).toSubsetEqualSome('Some'))
+      .toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Difference from Some:
+
+      - Expected
+      + Received
+
+      - Some
+      + another Some
+    `);
+  });
+  test('if received is a Some with a number value that does not equal the expected value', () => {
+    expect(() => expect(some(1)).toSubsetEqualSome(2)).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Expected Some: 2
+      Received Some: 1
+    `);
+  });
+  test('if received is not an Option value', () => {
+    expect(() => expect(1).toSubsetEqualSome(expect.anything()))
+      .toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toSubsetEqualSome(expectedSome)
+
+      Received value is not an Option.
+      Expected Some: Anything
+      Received: 1
+    `);
   });
 });
 
@@ -66,10 +152,18 @@ describe('.not.toSubsetEqualSome should pass', () => {
   test('if received is a None', () => {
     expect(none).not.toSubsetEqualSome('None');
   });
+  test('if received is not an Option value', () => {
+    expect(1).not.toSubsetEqualSome(expect.any(Number));
+  });
 });
 
 describe('.not.toSubsetEqualSome should fail', () => {
   test('if received is a Some that equals the expected value', () => {
-    expect(() => expect(some('Some')).not.toSubsetEqualSome('Some')).toThrowError();
+    expect(() => expect(some('Some')).not.toSubsetEqualSome('Some'))
+      .toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toSubsetEqualSome(expectedSome)
+
+      Expected Some: not "Some"
+    `);
   });
 });

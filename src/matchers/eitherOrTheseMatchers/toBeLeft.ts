@@ -1,21 +1,28 @@
-import { matcherHint } from 'jest-matcher-utils';
-import { Either, isLeft } from 'fp-ts/lib/Either';
+import { matcherHint, printReceived } from 'jest-matcher-utils';
+import { isEitherOrThese } from '../../predicates';
+import { isLeft } from '../../eitherOrThese/eitherOrThese';
+import { EitherOrThese } from '../../eitherOrThese/eitherOrThese';
+import { printReceivedValue } from '../../eitherOrThese/print';
 
-const passMessage = () => () =>
-  matcherHint('.not.toBeLeft', 'received', '') +
-  '\n\n' +
-  'Expected Either not to be Left. Received Left.';
+const passMessage = (received: EitherOrThese<unknown, unknown>) => () =>
+  matcherHint('.not.toBeLeft', 'received', '') + '\n\n' + `${printReceivedValue(received)}`;
 
-const failMessage = () => () =>
-  matcherHint('.toBeLeft', 'received', '') + '\n\n' + 'Expected Either to be Left. Received Right.';
+const failMessage = (received: unknown) => () => {
+  return isEitherOrThese(received)
+    ? matcherHint('.toBeLeft', 'received', '') + '\n\n' + `${printReceivedValue(received)}`
+    : matcherHint('.toBeLeft', 'received', '') +
+        '\n\n' +
+        'Received value is not an Either or These.\n' +
+        `Received: ${printReceived(received)}`;
+};
 
 /**
  * Check that the supplied Either is a Left
  */
-export const toBeLeft = (received: Either<unknown, unknown>): any => {
-  const pass: boolean = isLeft(received);
+export const toBeLeft = (received: unknown): any => {
+  const pass = isEitherOrThese(received) && isLeft(received);
   return {
     pass,
-    message: pass ? passMessage() : failMessage(),
+    message: pass ? passMessage(received) : failMessage(received),
   };
 };

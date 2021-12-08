@@ -1,10 +1,9 @@
 /// <reference types="jest" />
-
 declare namespace jest {
   interface Matchers<R> {
+    readonly toBeLeftWithErrorsMatching: (expected: unknown) => R;
     readonly toBeEither: () => R;
     readonly toBeLeft: () => R;
-    readonly toBeLeftWithErrorsMatching: (expected: unknown) => R;
     readonly toBeRight: () => R;
     readonly toEqualLeft: (expected: unknown) => R;
     readonly toEqualRight: (expected: unknown) => R;
@@ -18,14 +17,19 @@ declare namespace jest {
     readonly toEqualSome: (expected: unknown) => R;
     readonly toStrictEqualSome: (expected: unknown) => R;
     readonly toSubsetEqualSome: (expected: unknown) => R;
+    readonly toBeThese: () => R;
+    readonly toBeBoth: () => R;
+    readonly toEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => R;
+    readonly toStrictEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => R;
+    readonly toSubsetEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => R;
   }
 
   interface Expect {
+    readonly toBeLeftWithErrorsMatching: (expected: unknown) => any;
     readonly toBeEither: () => any;
     readonly toBeLeft: () => any;
     readonly toBeRight: () => any;
     readonly toEqualLeft: (expected: unknown) => any;
-    readonly toBeLeftWithErrorsMatching: (expected: unknown) => any;
     readonly toEqualRight: (expected: unknown) => any;
     readonly toStrictEqualLeft: (expected: unknown) => any;
     readonly toStrictEqualRight: (expected: unknown) => any;
@@ -37,5 +41,10 @@ declare namespace jest {
     readonly toEqualSome: (expected: unknown) => any;
     readonly toStrictEqualSome: (expected: unknown) => any;
     readonly toSubsetEqualSome: (expected: unknown) => any;
+    readonly toBeThese: () => any;
+    readonly toBeBoth: () => any;
+    readonly toEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => any;
+    readonly toStrictEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => any;
+    readonly toSubsetEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => any;
   }
 }

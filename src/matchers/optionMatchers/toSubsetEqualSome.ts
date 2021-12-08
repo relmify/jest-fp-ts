@@ -1,37 +1,52 @@
-import { matcherHint, printExpected } from 'jest-matcher-utils';
-import { Option } from 'fp-ts/lib/Option';
+import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
+import { Option, some } from 'fp-ts/lib/Option';
 import { applyPredicate } from '../../option/applyPredicate';
-import { subsetEquals } from '../../predicates';
-import { diffReceivedSome } from '../../option/print';
+import { isOption, subsetEquals, equals } from '../../predicates';
+import { diffReceivedSome, printReceivedOption } from '../../option/print';
 
-const passMessage = <R>(expected: R) => () =>
-  matcherHint('.not.toSubsetEqualSome', 'received', 'expectedSome') +
-  '\n\n' +
-  'Expected Option not to equal Some:\n' +
-  `  ${printExpected(expected)}` +
-  '\n\n' +
-  "But it's the same.";
+const passMessage = (received: Option<unknown>, expected: unknown) => () => {
+  const hint = matcherHint('.not.toSubsetEqualSome', 'received', 'expectedSome') + '\n\n';
+  const expectedValue = `Expected Some: not ${printExpected(expected)}`;
+  const receivedValue = equals(some(expected))(received)
+    ? ''
+    : `\n${printReceivedOption(received)}`;
+  return hint + expectedValue + receivedValue;
+};
 
-const failMessage = <R>(received: Option<unknown>, expected: R) => () =>
-  matcherHint('.toSubsetEqualSome', 'received', 'expectedSome') +
-  '\n\n' +
-  diffReceivedSome(received, expected);
+const failMessage = (received: unknown, expected: unknown) => () => {
+  return isOption(received)
+    ? matcherHint('.toSubsetEqualSome', 'received', 'expectedSome') +
+        '\n\n' +
+        diffReceivedSome(received, expected)
+    : matcherHint('.toSubsetEqualSome', 'received', 'expectedSome') +
+        '\n\n' +
+        'Received value is not an Option.\n' +
+        `Expected Some: ${printExpected(expected)}\n` +
+        `Received: ${printReceived(received)}`;
+};
 
 /**
- * Check that the received Option is a Some that contains an object that has a subset
- * of properties equal to the properties in the expected object.
+ * @summary
+ * Check that the received value is a Some whose value equals the expected value, or whose value is
+ * an object with a subset of properties that match the expected object.
  *
- * If an array of objects is expected, checks that the received object is a Some
- * whose value is an array of objects the same length as the expected array,
- * and that each object in the received array has a subset of properties equal to
- * to the properties in the corresponding expected object.
+ * @description
+ * Objects match if the received object contains all of the properties in the expected object. The
+ * received object may contain extra properties that are not in the expected object and still match.
+ *
+ * If an array is passed, each element in the expected array is compared to the corresponding
+ * element in the received array. Both arrays must be the same length, and each comparison must
+ * succeed in order to pass.
+ *
+ * Note: `toSubsetEqualSome(value)` is similar to Jest's `toMatchObject(object)` except it works
+ * with both objects and basic types.
  */
-export const toSubsetEqualSome = <R>(received: Option<unknown>, expected: R): any => {
+export const toSubsetEqualSome = (received: unknown, expected: unknown): any => {
   const predicate = subsetEquals(expected);
-  const pass = applyPredicate(predicate as (value: unknown) => boolean)(received);
+  const pass = isOption(received) && applyPredicate(predicate)(received);
 
   return {
     pass: pass,
-    message: pass ? passMessage(expected) : failMessage(received, expected),
+    message: pass ? passMessage(received, expected) : failMessage(received, expected),
   };
 };

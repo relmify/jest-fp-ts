@@ -1,28 +1,32 @@
-import { matcherHint, printExpected } from 'jest-matcher-utils';
+import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
 import { Option } from 'fp-ts/lib/Option';
 import { applyPredicate } from '../../option/applyPredicate';
-import { strictEquals } from '../../predicates';
+import { isOption, strictEquals } from '../../predicates';
 import { diffReceivedSome } from '../../option/print';
 
-const passMessage = <R>(expected: R) => () =>
+const passMessage = (expected: unknown) => () =>
   matcherHint('.not.toStrictEqualSome', 'received', 'expectedSome') +
   '\n\n' +
-  'Expected Option not to equal Some:\n' +
-  `  ${printExpected(expected)}` +
-  '\n\n' +
-  "But it's the same.";
+  `Expected Some: not ${printExpected(expected)}`;
 
-const failMessage = <R>(received: Option<unknown>, expected: R) => () =>
-  matcherHint('.toStrictEqualSome', 'received', 'expectedSome') +
-  '\n\n' +
-  diffReceivedSome(received, expected);
+const failMessage = (received: unknown, expected: unknown) => () => {
+  return isOption(received)
+    ? matcherHint('.toStrictEqualSome', 'received', 'expectedSome') +
+        '\n\n' +
+        diffReceivedSome(received, expected)
+    : matcherHint('.toStrictEqualSome', 'received', 'expectedSome') +
+        '\n\n' +
+        'Received value is not an Option.\n' +
+        `Expected Some: ${printExpected(expected)}\n` +
+        `Received: ${printReceived(received)}`;
+};
 
 /**
- * Check that the supplied Option is a Some that matches the expected value
+ * Check that the supplied value is a Some that matches the expected value
  */
-export const toStrictEqualSome = <R>(received: Option<unknown>, expected: R): any => {
+export const toStrictEqualSome = (received: unknown, expected: unknown): any => {
   const predicate = strictEquals(expected);
-  const pass = applyPredicate(predicate as (value: unknown) => boolean)(received);
+  const pass = isOption(received) && applyPredicate(predicate)(received);
 
   return {
     pass: pass,

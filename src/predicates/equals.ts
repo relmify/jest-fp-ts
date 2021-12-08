@@ -15,8 +15,10 @@ import {
  * either object. However, the check will still succeed when extra keys with
  * undefined values are present.
  */
-export const equals = (expected: unknown) => (received: unknown): boolean =>
-  jestEquals(received, expected, [iterableEquality]);
+export const equals =
+  (expected: unknown) =>
+  (received: unknown): boolean =>
+    jestEquals(received, expected, [iterableEquality]);
 
 /**
  * Returns `true` if the shape and value of the received object or primitive is equal
@@ -30,8 +32,10 @@ export const equals = (expected: unknown) => (received: unknown): boolean =>
  * - a sparse array is compared to an array with undefined values instead of missing values
  * - a class instance is compared to a literal object instance with the same properties
  */
-export const strictEquals = (expected: unknown) => (received: unknown): boolean =>
-  jestEquals(received, expected, [iterableEquality, typeEquality, sparseArrayEquality], true);
+export const strictEquals =
+  (expected: unknown) =>
+  (received: unknown): boolean =>
+    jestEquals(received, expected, [iterableEquality, typeEquality, sparseArrayEquality], true);
 
 /**
  * Returns `true` if a subset of the received object matches the expected object.
@@ -40,5 +44,7 @@ export const strictEquals = (expected: unknown) => (received: unknown): boolean 
  * each object in the received array against the corresponding object in the
  * expected array. If the two arrays are not equal in length it will return `false`.
  */
-export const subsetEquals = (expected: unknown) => (received: unknown): boolean =>
-  jestEquals(received, expected, [iterableEquality, subsetEquality]);
+export const subsetEquals =
+  (expected: unknown) =>
+  (received: unknown): boolean =>
+    jestEquals(received, expected, [iterableEquality, subsetEquality]);

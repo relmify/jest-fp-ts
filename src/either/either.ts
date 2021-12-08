@@ -1,4 +1,4 @@
-/** Code in this file was copied from io-ts-types/src/either.ts */
+/** Code in this file is based on io-ts-types/src/either.ts */
 import * as t from 'io-ts';
 import { Either } from 'fp-ts/lib/Either';
 
@@ -12,7 +12,8 @@ type EitherT<L extends t.Mixed, R extends t.Mixed> = t.Type<
 >;
 
 /**
- * Given a codec representing a type `L` and a codec representing a type `A`, returns a codec representing `Either<L, A>` that is able to deserialize
+ * Given a codec representing a type `L` and a codec representing a type `R`,
+ * returns a codec representing `Either<L, R>` that is able to deserialize
  * the JSON representation of an `Either`.
  */
 export const either = <L extends t.Mixed, R extends t.Mixed>(
@@ -34,7 +35,7 @@ export const either = <L extends t.Mixed, R extends t.Mixed>(
           _tag: rightLiteral,
           right: rightCodec,
         },
-        `Right<${leftCodec.name}>`,
+        `Right<${rightCodec.name}>`,
       ),
     ],
     name,

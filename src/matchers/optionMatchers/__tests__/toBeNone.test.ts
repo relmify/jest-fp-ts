@@ -1,7 +1,8 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { matchers } from '../index';
-import { NONAME } from 'dns';
+import { stripAnsi } from '../../../serializers';
 
+expect.addSnapshotSerializer(stripAnsi);
 expect.extend(matchers);
 
 describe('.toBeNone should pass', () => {
@@ -15,7 +16,19 @@ describe('.toBeNone should pass', () => {
 
 describe('.toBeNone should fail', () => {
   test('if received is a Some', () => {
-    expect(() => expect(some('Some')).toBeNone()).toThrowError();
+    expect(() => expect(some(1)).toBeNone()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toBeNone()
+
+      Received Some: 1
+    `);
+  });
+  test('if received is not an Option', () => {
+    expect(() => expect(null).toBeNone()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toBeNone()
+
+      Received value is not an Option.
+      Received: null
+    `);
   });
 });
 
@@ -23,10 +36,17 @@ describe('.not.toBeNone should pass', () => {
   test('if received is a Some', () => {
     expect(some('Some')).not.toBeNone();
   });
+  test('if received is not an Option', () => {
+    expect(null).not.toBeNone();
+  });
 });
 
 describe('.not.toBeNone should fail', () => {
   test('if received is a None', () => {
-    expect(() => expect(none).not.toBeNone()).toThrowError();
+    expect(() => expect(none).not.toBeNone()).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toBeNone()
+
+      Received a None
+    `);
   });
 });

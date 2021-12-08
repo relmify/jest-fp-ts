@@ -1,17 +1,13 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
 import { isOption } from '../../predicates';
+import { printReceivedOption } from '../../option/print';
+import { Option } from 'fp-ts/lib/Option';
 
-const passMessage = (received: unknown) => () =>
-  matcherHint('.not.toBeOption', 'received', '') +
-  '\n\n' +
-  'Unexpected Option, received:\n' +
-  `  ${printReceived(received)}`;
+const passMessage = (received: Option<unknown>) => () =>
+  matcherHint('.not.toBeOption', 'received', '') + '\n\n' + `${printReceivedOption(received)}`;
 
 const failMessage = (received: unknown) => () =>
-  matcherHint('.toBeOption', 'received', '') +
-  '\n\n' +
-  'Expected Option, received:\n' +
-  `  ${printReceived(received)}`;
+  matcherHint('.toBeOption', 'received', '') + '\n\n' + `Received: ${printReceived(received)}`;
 
 /**
  * Matches if the received value is an Option

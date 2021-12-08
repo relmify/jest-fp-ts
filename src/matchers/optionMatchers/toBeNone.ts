@@ -1,21 +1,27 @@
-import { matcherHint } from 'jest-matcher-utils';
+import { matcherHint, printReceived } from 'jest-matcher-utils';
 import { Option, isNone } from 'fp-ts/lib/Option';
+import { isOption } from '../../predicates';
+import { printReceivedOption } from '../../option/print';
 
-const passMessage = () => () =>
-  matcherHint('.not.toBeNone', 'received', '') +
-  '\n\n' +
-  'Expected Option not to be None. Received None.';
+const passMessage = (received: Option<unknown>) => () =>
+  matcherHint('.not.toBeNone', 'received', '') + '\n\n' + `${printReceivedOption(received)}`;
 
-const failMessage = () => () =>
-  matcherHint('.toBeNone', 'received', '') + '\n\n' + 'Expected Option to be None. Received Some.';
+const failMessage = (received: unknown) => () => {
+  return isOption(received)
+    ? matcherHint('.toBeNone', 'received', '') + '\n\n' + `${printReceivedOption(received)}`
+    : matcherHint('.toBeNone', 'received', '') +
+        '\n\n' +
+        'Received value is not an Option.\n' +
+        `Received: ${printReceived(received)}`;
+};
 
 /**
- * Check that the supplied Option is a None
+ * Check that the supplied value is a None
  */
-export const toBeNone = (received: Option<unknown>): any => {
-  const pass: boolean = isNone(received);
+export const toBeNone = (received: unknown): any => {
+  const pass = isOption(received) && isNone(received);
   return {
     pass,
-    message: pass ? passMessage() : failMessage(),
+    message: pass ? passMessage(received) : failMessage(received),
   };
 };

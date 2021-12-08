@@ -1,6 +1,8 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { matchers } from '../index';
+import { stripAnsi } from '../../../serializers';
 
+expect.addSnapshotSerializer(stripAnsi);
 expect.extend(matchers);
 
 describe('.toEqualSome should pass', () => {
@@ -14,23 +16,56 @@ describe('.toEqualSome should pass', () => {
     expect(some(null)).toEqualSome(null);
   });
   test('if called as an asymmetric matcher', () => {
-    expect(some('People who are truly strong lift others up.')).toEqual(
-      expect.toEqualSome('People who are truly strong lift others up.'),
+    expect(some('Any sufficiently advanced technology is equivalent to magic.')).toEqual(
+      expect.toEqualSome('Any sufficiently advanced technology is equivalent to magic.'),
     );
   });
   test('if called with an asymmetric matcher', () => {
-    expect(some('People who are truly powerful bring others together.')).toEqualSome(
-      expect.stringContaining('powerful'),
+    expect(some('You affect the world by what you browse.')).toEqualSome(
+      expect.stringContaining('world'),
     );
   });
 });
 
 describe('.toEqualSome should fail', () => {
   test('if received is a None', () => {
-    expect(() => expect(none).toEqualSome('Some')).toThrowError();
+    expect(() => expect(none).toEqualSome('Some')).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toEqualSome(expectedSome)
+
+      Expected Some: "Some"
+      Received a None
+    `);
   });
   test('if received is a Some that does not equal the expected value', () => {
-    expect(() => expect(some('another Some')).toEqualSome('Some')).toThrowError();
+    expect(() => expect(some('another Some')).toEqualSome('Some'))
+      .toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toEqualSome(expectedSome)
+
+      Difference from Some:
+
+      - Expected
+      + Received
+
+      - Some
+      + another Some
+    `);
+  });
+  test('if received is a Some with a number value that does not equal the expected value', () => {
+    expect(() => expect(some(1)).toEqualSome(2)).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toEqualSome(expectedSome)
+
+      Expected Some: 2
+      Received Some: 1
+    `);
+  });
+  test('if received value is not an Option', () => {
+    expect(() => expect(undefined).toEqualSome(undefined)).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toEqualSome(expectedSome)
+
+      Received value is not an Option.
+      Expected Some: undefined
+      Received: undefined
+    `);
   });
 });
 
@@ -41,10 +76,17 @@ describe('.not.toEqualSome should pass', () => {
   test('if received is a None', () => {
     expect(none).not.toEqualSome('Some');
   });
+  test('if received value is not an Option', () => {
+    expect(1).not.toEqualSome(1);
+  });
 });
 
 describe('.not.toEqualSome should fail', () => {
   test('if received is a Some that equals the expected value', () => {
-    expect(() => expect(some('Some')).not.toEqualSome('Some')).toThrowError();
+    expect(() => expect(some('Some')).not.toEqualSome('Some')).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toEqualSome(expectedSome)
+
+      Expected Some: not "Some"
+    `);
   });
 });

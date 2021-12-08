@@ -2,15 +2,58 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
+adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.0] - 2021/12/10
+
+Note that this is a major release which contains some breaking changes. Breaking changes will affect
+you if:
+
+- You are checking for specific failure message strings in some of your tests (for example, if you are
+  expecting certain tests to fail with a particular snapshot message).
+- You have tests that you expect to fail when you are using the `.not` modifier and the received
+  value is not wrapped in the expected `fp-ts` container type.
+
+### Added
+
+- Custom matchers for values that are wrapped inside an `fp-ts` `These`:
+  - `.toBeThese()`
+  - `.toBeBoth()`
+  - `.toEqualBoth(leftValue, rightValue)`
+  - `.toStrictEqualBoth(leftValue, rightValue)`
+  - `.toSubsetEqualBoth(leftValue, rightValue)`
+
+### Changed
+
+- **BREAKING** `*Left*` and `*Right*` matchers now officially support both `Either` and `These`
+  types. Documentation and failure messages have been updated accordingly.
+- **BREAKING** Matcher failure messages have been adjusted to align more closely with the messages
+  returned by similar matchers in jest.
+- **BREAKING** The types for received values in all matchers are now correctly represented as
+  `unknown` and type guards are used to confirm that received values match expected types. Matchers
+  that previously threw errors when bad types were received (values not wrapped in the expected
+  `fp-ts` container type) now pass when using the `.not` modifier, and fail with better messages
+  without the `.not` modifier.
+- README now demonstrates how asymmetric matchers can be used to specify wildcard expected values.
+- [dev] Internal matcher unit tests now check matcher failure messages against recorded snapshots to
+  guard against unintentional breaking interface changes.
+- [dev] Added a custom snapshot serialzer that strips ansi escape codes in snapshots for improved
+  snapshot readability in internal unit tests.
+- [dev] Updated jest config to use the jest-snapshot-serializer-raw for improved snapshot
+  readability in internal unit tests.
+- [dev] Updated dependencies to their latest versions.
+
+### Fixed
+
+- Updated `tsconfig.json` so VS Code Intellisense works in matcher unit tests.
 
 ## [1.1.1] - 2020/07/21
 
 ### Changed
 
 - Updated dependencies to their latest versions.
-- README installation instructions now mention that both `fp-ts` and `io-ts` are dependencies.
+- README installation instructions now mention that both `fp-ts` and `io-ts` are peer dependencies.
 
 ## [1.1.0] - 2020/07/13
 
@@ -36,7 +79,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[1.1.1]: https://github.com/relmify/jest-fp-ts/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/relmify/jest-fp-ts/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/relmify/jest-fp-ts/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/relmify/jest-fp-ts/releases/tag/v1.0.0
+- [2.0.0]: https://github.com/relmify/jest-fp-ts/compare/v1.1.1...v2.0.0
+- [1.1.1]: https://github.com/relmify/jest-fp-ts/compare/v1.1.0...v1.1.1
+- [1.1.0]: https://github.com/relmify/jest-fp-ts/compare/v1.0.1...v1.1.0
+- [1.0.1]: https://github.com/relmify/jest-fp-ts/compare/v1.0.0...v1.0.1
+- [1.0.0]: https://github.com/relmify/jest-fp-ts/releases/tag/v1.0.0

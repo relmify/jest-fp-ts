@@ -1,40 +1,53 @@
-import { matcherHint, printExpected } from 'jest-matcher-utils';
-import { Either } from 'fp-ts/lib/Either';
-import { applyPredicateLeft } from '../../either/applyPredicate';
-import { subsetEquals } from '../../predicates';
-import { diffReceivedLeft } from '../../either/print';
+import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
+import { applyPredicateLeft } from '../../eitherOrThese/applyPredicate';
+import { subsetEquals, equals, isEitherOrThese } from '../../predicates';
+import { diffReceivedLeft, printReceivedValue } from '../../eitherOrThese/print';
+import { EitherOrThese } from '../../eitherOrThese/eitherOrThese';
+import { left } from 'fp-ts/lib/These';
 
-const passMessage = <L>(expected: L) => () =>
-  matcherHint('.not.toSubsetEqualLeft', 'received', 'expectedLeft') +
-  '\n\n' +
-  'Expected Either not to equal left:\n' +
-  `  ${printExpected(expected)}` +
-  '\n\n' +
-  "But it's the same.";
+const passMessage = (received: EitherOrThese<unknown, unknown>, expected: unknown) => () => {
+  const hint = matcherHint('.not.toSubsetEqualLeft', 'received', 'expectedLeft') + '\n\n';
+  const expectedValue = `Expected Left: not ${printExpected(expected)}`;
+  const receivedValue = equals(left(expected))(received)
+    ? ''
+    : `\n${printReceivedValue(received, true)}`;
+  return hint + expectedValue + receivedValue;
+};
 
-const failMessage = <L>(received: Either<L, unknown>, expected: L) => () => {
-  return (
-    matcherHint('.toSubsetEqualLeft', 'received', 'expectedLeft') +
-    '\n\n' +
-    diffReceivedLeft(received, expected)
-  );
+const failMessage = (received: unknown, expected: unknown) => () => {
+  return isEitherOrThese(received)
+    ? matcherHint('.toSubsetEqualLeft', 'received', 'expectedLeft') +
+        '\n\n' +
+        diffReceivedLeft(received, expected)
+    : matcherHint('.toSubsetEqualLeft', 'received', 'expectedLeft') +
+        '\n\n' +
+        'Received value is not an Either or These.\n' +
+        `Expected Left: ${printExpected(expected)}\n` +
+        `Received: ${printReceived(received)}`;
 };
 
 /**
- * Check that the received Either is a Left that contains an object that has a subset
- * of properties equal to the properties in the expected object.
+ * @summary
+ * Check that the received value is a Left whose value equals the expected value, or whose value is
+ * an object with a subset of properties that match the expected object.
  *
- * If an array of objects is expected, checks that the received object is a Left
- * whose value is an array of objects the same length as the expected array,
- * and that each object in the received array has a subset of properties equal to
- * to the properties in the corresponding expected object.
+ * @description
+ * Objects match if the received object contains all of the properties in the expected object. The
+ * received object may contain extra properties that are not in the expected object and still match.
+ *
+ * If an array is passed, each element in the expected array is compared to the corresponding
+ * element in the received array. Both arrays must be the same length, and each comparison must
+ * succeed in order to pass.
+ *
+ * Note: `toSubsetEqualLeft(value)` is similar to Jest's `toMatchObject(object)` except it works
+ * with both objects and basic types.
  */
-export const toSubsetEqualLeft = <L>(received: Either<L, unknown>, expected: L): any => {
+export const toSubsetEqualLeft = (received: unknown, expected: unknown): any => {
   const predicate = subsetEquals(expected);
-  const pass = applyPredicateLeft(predicate as (value: unknown) => boolean)(received);
+  const pass = isEitherOrThese(received) && applyPredicateLeft(predicate)(received);
 
   return {
     pass: pass,
-    message: pass ? passMessage(expected) : failMessage(received, expected),
+    message: pass ? passMessage(received, expected) : failMessage(received, expected),
   };
 };

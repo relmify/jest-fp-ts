@@ -15,10 +15,7 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": false,
-    "allowJs": true,
   },
-  "files": ["global.d.ts", "src/serializers/stripAnsi.ts"],
-  "include": ["**/*"],
+  "include": ["**/*", "global.d"],
   "exclude": ["dist", "node_modules", "**/__tests__/*"]
 }

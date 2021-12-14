@@ -1,10 +1,10 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toStrictEqualBoth } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toStrictEqualBoth });
 
 class Message {
   message: string;
@@ -45,13 +45,12 @@ describe('.toStrictEqualBoth should fail', () => {
       expect(received).toStrictEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: {"a": 2}
-        Right: {"b": 2}
+      Left: {"a": 2}
+      Right: {"b": 2}
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
         Object {
       -   "a": 2,
@@ -65,8 +64,9 @@ describe('.toStrictEqualBoth should fail', () => {
       expect(received).toStrictEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Left: "received left"
     `);
   });
@@ -77,8 +77,9 @@ describe('.toStrictEqualBoth should fail', () => {
       expect(received).toStrictEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Right: "received right"
     `);
   });
@@ -90,31 +91,16 @@ describe('.toStrictEqualBoth should fail', () => {
       expect(received).toStrictEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: [1, , 3]
-        Right: [, 2]
+      Left: [1, , 3]
+      Right: [, 2]
 
       Difference from Left:
-
-      - Expected
-      + Received
-
-        Array [
-          1,
-      -   ,
-      +   undefined,
-          3,
-        ]
+      Expected: [1, , 3]
+      Received: [1, undefined, 3]
 
       Difference from Right:
-
-      - Expected
-      + Received
-
-        Array [
-      -   ,
-      +   undefined,
-          2,
-        ]
+      Expected: [, 2]
+      Received: [undefined, 2]
     `);
   });
   test('if received is a Both whose values do not strictly equal the expected class instances', () => {
@@ -127,13 +113,12 @@ describe('.toStrictEqualBoth should fail', () => {
       expect(received).toStrictEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: {"message": "Does not compute!"}
-        Right: {"message": "All clear"}
+      Left: {"message": "Does not compute!"}
+      Right: {"message": "All clear"}
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
       - Message {
       + Object {
@@ -141,9 +126,8 @@ describe('.toStrictEqualBoth should fail', () => {
         }
 
       Difference from Right:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
       - Message {
       + Object {

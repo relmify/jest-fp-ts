@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toEqualSome } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toEqualSome });
 
 describe('.toEqualSome should pass', () => {
   test('if received is a Some with the expected value', () => {
@@ -33,7 +33,7 @@ describe('.toEqualSome should fail', () => {
       expect(received).toEqualSome(expectedSome)
 
       Expected Some: "Some"
-      Received a None
+      Received None
     `);
   });
   test('if received is a Some that does not equal the expected value', () => {
@@ -41,13 +41,8 @@ describe('.toEqualSome should fail', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
-
-      - Some
-      + another Some
+      Expected Some: "Some"
+      Received Some: "another Some"
     `);
   });
   test('if received is a Some with a number value that does not equal the expected value', () => {

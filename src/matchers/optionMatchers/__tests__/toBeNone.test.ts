@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toBeNone } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeNone });
 
 describe('.toBeNone should pass', () => {
   test('if received is a None', () => {
@@ -46,7 +46,7 @@ describe('.not.toBeNone should fail', () => {
     expect(() => expect(none).not.toBeNone()).toThrowErrorMatchingInlineSnapshot(`
       expect(received).not.toBeNone()
 
-      Received a None
+      Received None
     `);
   });
 });

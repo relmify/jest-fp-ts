@@ -1,11 +1,11 @@
 import { left as leftEither, right as rightEither } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toSubsetEqualRight } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toSubsetEqualRight });
 
 describe('.toSubsetEqualRight should pass', () => {
   test('if the received is a Right with a subset of properties that match the expected value', () => {
@@ -44,10 +44,8 @@ describe('.toSubsetEqualRight should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
+      - Expected Right  - 1
+      + Received Right  + 0
 
         Object {
       -   "orderId": "123",
@@ -65,10 +63,8 @@ describe('.toSubsetEqualRight should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
+      - Expected Right  - 3
+      + Received Right  + 0
 
         Array [
           Object {
@@ -92,10 +88,8 @@ describe('.toSubsetEqualRight should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
+      - Expected Right  - 0
+      + Received Right  + 3
 
         Array [
           Object {
@@ -124,13 +118,8 @@ describe('.toSubsetEqualRight should fail', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
-
-      - right
-      + another right
+      Expected Right: "right"
+      Received Right: "another right"
     `);
   });
 });
@@ -145,10 +134,8 @@ describe('.toSubsetEqualRight should fail and include the expected and received 
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
+      - Expected Right  - 1
+      + Received Right  + 0
 
         Object {
       -   "orderId": "123",
@@ -161,13 +148,8 @@ describe('.toSubsetEqualRight should fail and include the expected and received 
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
-
-      - expected right
-      + received right
+      Expected Right: "expected right"
+      Received Right: "received right"
     `);
   });
   test('if received is a Left', () => {
@@ -186,8 +168,8 @@ describe('.toSubsetEqualRight should fail and include the expected and received 
 
       Expected Right: undefined
       Received Both:
-        Left: "a"
-        Right: "b"
+      Left: "a"
+      Right: "b"
     `);
   });
   test('if received is not an Either or These', () => {

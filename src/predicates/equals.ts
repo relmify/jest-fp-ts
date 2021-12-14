@@ -3,6 +3,7 @@ import {
   iterableEquality,
   typeEquality,
   sparseArrayEquality,
+  arrayBufferEquality,
   subsetEquality,
 } from '../util';
 
@@ -35,7 +36,12 @@ export const equals =
 export const strictEquals =
   (expected: unknown) =>
   (received: unknown): boolean =>
-    jestEquals(received, expected, [iterableEquality, typeEquality, sparseArrayEquality], true);
+    jestEquals(
+      received,
+      expected,
+      [iterableEquality, typeEquality, sparseArrayEquality, arrayBufferEquality],
+      true,
+    );
 
 /**
  * Returns `true` if a subset of the received object matches the expected object.

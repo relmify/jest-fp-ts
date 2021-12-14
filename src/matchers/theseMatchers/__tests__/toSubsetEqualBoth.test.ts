@@ -1,10 +1,10 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toSubsetEqualBoth } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toSubsetEqualBoth });
 
 class Message {
   message: string;
@@ -37,8 +37,8 @@ describe('.toSubsetEqualBoth should pass', () => {
     );
   });
   test('if received is a Both that does not strictly equal the expected sparse array', () => {
-    // eslint-disable-next-line no-sparse-arrays
     expect(() =>
+      // eslint-disable-next-line no-sparse-arrays
       expect(both([1, undefined, 3], [undefined, 2])).toSubsetEqualBoth([1, , 3], [, 2]),
     );
   });
@@ -59,13 +59,12 @@ describe('.toSubsetEqualBoth should fail', () => {
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: {"a": 2}
-        Right: {"b": 2}
+      Left: {"a": 2}
+      Right: {"b": 2}
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
         Object {
       -   "a": 2,
@@ -80,19 +79,19 @@ describe('.toSubsetEqualBoth should fail', () => {
           orderId: '123',
           orderNumber: 100,
         },
+
         1,
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: {"orderId": "123", "orderNumber": 100}
-        Right: 1
+      Left: {"orderId": "123", "orderNumber": 100}
+      Right: 1
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 0
 
         Object {
       -   "orderId": "123",
@@ -110,13 +109,12 @@ describe('.toSubsetEqualBoth should fail', () => {
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: [{"a": "a"}, {"b": "b"}, {"c": "c"}]
-        Right: [{"e": "e"}]
+      Left: [{"a": "a"}, {"b": "b"}, {"c": "c"}]
+      Right: [{"e": "e"}]
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 3
+      + Received  + 0
 
         Array [
           Object {
@@ -131,9 +129,8 @@ describe('.toSubsetEqualBoth should fail', () => {
         ]
 
       Difference from Right:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
         Array [
           Object {
@@ -152,13 +149,12 @@ describe('.toSubsetEqualBoth should fail', () => {
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: [{"num": 1}, {"num": 2}]
-        Right: [{"str": "a"}, {"str": "b"}]
+      Left: [{"num": 1}, {"num": 2}]
+      Right: [{"str": "a"}, {"str": "b"}]
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 0
+      + Received  + 3
 
         Array [
           Object {
@@ -179,8 +175,9 @@ describe('.toSubsetEqualBoth should fail', () => {
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Left: "received left"
     `);
   });
@@ -191,8 +188,9 @@ describe('.toSubsetEqualBoth should fail', () => {
       expect(received).toSubsetEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Right: "received right"
     `);
   });

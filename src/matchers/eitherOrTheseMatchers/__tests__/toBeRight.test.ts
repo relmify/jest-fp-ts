@@ -1,11 +1,11 @@
 import { left as leftEither, right as rightEither } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
 import { none, some } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toBeRight } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeRight });
 
 describe('.toBeRight', () => {
   test('should pass if the received object is a Right Either', () => {
@@ -39,8 +39,8 @@ describe('.toBeRight should fail', () => {
       expect(received).toBeRight()
 
       Received Both:
-        Left: "left"
-        Right: "right"
+      Left: "left"
+      Right: "right"
     `);
   });
   test('if received is a None', () => {

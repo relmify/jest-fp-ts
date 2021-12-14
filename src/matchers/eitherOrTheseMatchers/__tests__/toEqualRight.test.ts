@@ -1,11 +1,11 @@
 import { left as leftEither, right as rightEither } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toEqualRight } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toEqualRight });
 
 class Message {
   message: string;
@@ -53,13 +53,8 @@ describe('.toEqualRight should fail and include the expected and received values
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
-
-      - expected right
-      + received right
+      Expected Right: "expected right"
+      Received Right: "received right"
     `);
   });
   test('if received is a Left', () => {
@@ -78,8 +73,8 @@ describe('.toEqualRight should fail and include the expected and received values
 
       Expected Right: "expected right"
       Received Both:
-        Left: "received left"
-        Right: "received right"
+      Left: "received left"
+      Right: "received right"
     `);
   });
 });

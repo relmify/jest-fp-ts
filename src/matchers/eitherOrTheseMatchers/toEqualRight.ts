@@ -19,8 +19,30 @@ const failMessage = (received: unknown, expected: unknown) => () => {
         `Expected Right: ${printExpected(expected)}\n` +
         `Received: ${printReceived(received)}`;
 };
+
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Right whose value equals an expected value. See Jest's
+       * [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualRight: (expected: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Right whose value equals an expected value. See Jest's
+       * [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualRight: (expected: unknown) => any;
+    }
+  }
+}
+
 /**
- * Check that the received value is a Left that equals an expected value
+ * Check that the received value is a Right that equals an expected value
  */
 export const toEqualRight = (received: unknown, expected: unknown): any => {
   const predicate = equals(expected);

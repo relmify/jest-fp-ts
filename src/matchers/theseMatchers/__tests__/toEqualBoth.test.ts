@@ -1,10 +1,10 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toEqualBoth } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toEqualBoth });
 
 class Message {
   message: string;
@@ -57,13 +57,12 @@ describe('.toEqualBoth should fail', () => {
       expect(received).toEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: {"a": 2}
-        Right: {"b": 2}
+      Left: {"a": 2}
+      Right: {"b": 2}
 
       Difference from Left:
-
-      - Expected
-      + Received
+      - Expected  - 1
+      + Received  + 1
 
         Object {
       -   "a": 2,
@@ -78,11 +77,10 @@ describe('.toEqualBoth should fail', () => {
       expect(received).toEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: Any<Object>
-        Right: Any<String>
+      Left: Any<Object>
+      Right: Any<String>
 
       Difference from Right:
-
       Expected: Any<String>
       Received: {"b": 2}
     `);
@@ -93,8 +91,9 @@ describe('.toEqualBoth should fail', () => {
       expect(received).toEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Left: "received left"
     `);
   });
@@ -104,8 +103,9 @@ describe('.toEqualBoth should fail', () => {
       expect(received).toEqualBoth(expectedLeft, expectedRight)
 
       Expected Both:
-        Left: "expected left"
-        Right: "expected right"
+      Left: "expected left"
+      Right: "expected right"
+
       Received Right: "received right"
     `);
   });

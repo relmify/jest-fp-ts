@@ -15,6 +15,23 @@ const failMessage = (received: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Both.
+       */
+      readonly toBeBoth: () => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Both.
+       */
+      readonly toBeBoth: () => any;
+    }
+  }
+}
+
 /**
  * Check that the received value is a Both
  */

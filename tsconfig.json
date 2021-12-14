@@ -16,6 +16,5 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
   },
-  "include": ["**/*", "global.d"],
   "exclude": ["dist", "node_modules", "**/__tests__/*"]
 }

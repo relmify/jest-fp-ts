@@ -20,8 +20,29 @@ const failMessage = (received: unknown, expected: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Some that contains a value that equals an expected value. See
+       * Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualSome: (expected: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Some that contains a value that equals an expected value. See
+       * Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualSome: (expected: unknown) => any;
+    }
+  }
+}
+
 /**
- * Check that the supplied value is a Some that matches the expected value
+ * Check that the received value is a Some that equals the expected value
  */
 export const toEqualSome = (received: unknown, expected: unknown): any => {
   const predicate = equals(expected);

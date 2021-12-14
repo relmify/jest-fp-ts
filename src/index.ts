@@ -1,21 +1,22 @@
-import { matchers } from './matchers';
-
-// //declare let global: any;
-
-// const jestExpect = global.expect;
-
-// if (jestExpect !== undefined) {
-//   jestExpect.extend(matchers);
-// } else {
-//   /* eslint-disable no-console */
-//   console.error(
-//     "Unable to find Jest's global expect." +
-//       '\nPlease check you have added jest-fp-ts correctly to your jest configuration.' +
-//       '\nSee https://github.com/relmify/jest-fp-ts#setup for help.',
-//   );
-//   /* eslint-enable no-console */
-// }
-
-expect.extend(matchers);
-
-// export default matchers;
+export { matchers } from './matchers';
+export { toBeLeftWithErrorsMatching } from './matchers/decodeMatchers/toBeLeftWithErrorsMatching';
+export { toBeEither } from './matchers/eitherMatchers/toBeEither';
+export { toBeLeft } from './matchers/eitherOrTheseMatchers/toBeLeft';
+export { toBeRight } from './matchers/eitherOrTheseMatchers/toBeRight';
+export { toEqualLeft } from './matchers/eitherOrTheseMatchers/toEqualLeft';
+export { toEqualRight } from './matchers/eitherOrTheseMatchers/toEqualRight';
+export { toStrictEqualLeft } from './matchers/eitherOrTheseMatchers/toStrictEqualLeft';
+export { toStrictEqualRight } from './matchers/eitherOrTheseMatchers/toStrictEqualRight';
+export { toSubsetEqualLeft } from './matchers/eitherOrTheseMatchers/toSubsetEqualLeft';
+export { toSubsetEqualRight } from './matchers/eitherOrTheseMatchers/toSubsetEqualRight';
+export { toBeOption } from './matchers/optionMatchers/toBeOption';
+export { toBeNone } from './matchers/optionMatchers/toBeNone';
+export { toBeSome } from './matchers/optionMatchers/toBeSome';
+export { toEqualSome } from './matchers/optionMatchers/toEqualSome';
+export { toStrictEqualSome } from './matchers/optionMatchers/toStrictEqualSome';
+export { toSubsetEqualSome } from './matchers/optionMatchers/toSubsetEqualSome';
+export { toBeThese } from './matchers/theseMatchers/toBeThese';
+export { toBeBoth } from './matchers/theseMatchers/toBeBoth';
+export { toEqualBoth } from './matchers/theseMatchers/toEqualBoth';
+export { toStrictEqualBoth } from './matchers/theseMatchers/toStrictEqualBoth';
+export { toSubsetEqualBoth } from './matchers/theseMatchers/toSubsetEqualBoth';

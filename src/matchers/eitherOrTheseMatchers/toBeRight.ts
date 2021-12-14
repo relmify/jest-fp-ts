@@ -16,8 +16,25 @@ const failMessage = (received: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Right.
+       */
+      readonly toBeRight: () => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Right.
+       */
+      readonly toBeRight: () => any;
+    }
+  }
+}
+
 /**
- * Checked that the supplied Either is a Right
+ * Checked that the received value is a Right
  */
 export const toBeRight = (received: unknown): any => {
   const pass = isEitherOrThese(received) && isRight(received);

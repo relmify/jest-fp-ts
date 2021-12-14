@@ -1,10 +1,10 @@
 import { left, right } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
-import { matchers } from '../index';
+import { toBeEither } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeEither });
 
 describe('.toBeEither should pass', () => {
   test('if received is a Left', () => {

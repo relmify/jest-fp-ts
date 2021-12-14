@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toStrictEqualSome } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toStrictEqualSome });
 
 class Message {
   message: string;
@@ -40,7 +40,7 @@ describe('.toStrictEqualSome should fail', () => {
       expect(received).toStrictEqualSome(expectedSome)
 
       Expected Some: "Some"
-      Received a None
+      Received None
     `);
   });
   test('if received is a Some that does not equal the expected value', () => {
@@ -48,13 +48,8 @@ describe('.toStrictEqualSome should fail', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
-
-      - Some
-      + another Some
+      Expected Some: "Some"
+      Received Some: "another Some"
     `);
   });
   test('if received is a Some that does not strictly equal the expected sparse array', () => {
@@ -63,17 +58,8 @@ describe('.toStrictEqualSome should fail', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
-
-        Array [
-          1,
-      -   ,
-      +   undefined,
-          3,
-        ]
+      Expected Some: [1, , 3]
+      Received Some: [1, undefined, 3]
     `);
   });
   test('if received is a Some that does not strictly equal the expected class instance', () => {
@@ -84,10 +70,8 @@ describe('.toStrictEqualSome should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
+      - Expected Some  - 1
+      + Received Some  + 1
 
       - Message {
       + Object {
@@ -104,7 +88,8 @@ describe('.toStrictEqualSome should fail', () => {
     `);
   });
   test('if received value is not an Option', () => {
-    expect(() => expect(undefined).toStrictEqualSome(undefined)).toThrowErrorMatchingInlineSnapshot(`
+    expect(() => expect(undefined).toStrictEqualSome(undefined))
+      .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualSome(expectedSome)
 
       Received value is not an Option.

@@ -6,7 +6,9 @@ expect.addSnapshotSerializer(stripAnsi);
 
 describe('printReceivedValue includes the received value', () => {
   test('if a Left with a string value is received', () => {
-    expect(printReceivedValue(left('Left value'))).toMatchInlineSnapshot(`Received Left:  "Left value"`);
+    expect(printReceivedValue(left('Left value'))).toMatchInlineSnapshot(
+      `Received Left:  "Left value"`,
+    );
   });
   test('if a Left with an object value is received', () => {
     expect(printReceivedValue(left({ id: 1 }))).toMatchInlineSnapshot(`Received Left:  {"id": 1}`);

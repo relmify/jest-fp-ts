@@ -24,8 +24,32 @@ const failMessage = (received: unknown, expectedLeft: unknown, expectedRight: un
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Use `.toEqualBoth(leftValue, rightValue)` to check if a value is a Both that contains a
+       * left value that equals an expected value, and a right value that equals an expected value.
+       * See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Both that contains a left value that equals an expected
+       * value, and a right value that equals an expected value. See Jest's
+       * [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor
+       * information about how the `.toEqual()` comparison works.
+       */
+      readonly toEqualBoth: (expectedLeft: unknown, expectedRight: unknown) => any;
+    }
+  }
+}
+
 /**
- * Check that the received value is a Left that equals an expected value
+ * Check that the received value is a Both with left and right values that equal the expected
+ * left and right values.
  */
 export const toEqualBoth = (
   received: unknown,

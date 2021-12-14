@@ -21,7 +21,7 @@ describe('printReceivedOption', () => {
     expect(printReceivedOption(some({ id: 1 }))).toMatchInlineSnapshot(`Received Some: {"id": 1}`);
   });
   test('indicates if the received value is a None', () => {
-    expect(printReceivedOption(none)).toMatchInlineSnapshot(`Received a None`);
+    expect(printReceivedOption(none)).toMatchInlineSnapshot(`Received None`);
   });
   test('handles a Some with an undefined value', () => {
     expect(printReceivedOption(some(undefined))).toMatchInlineSnapshot(`Received Some: undefined`);
@@ -50,19 +50,14 @@ describe('diffReceivedSome', () => {
   test('returns a string that contains the expected and received values', () => {
     expect(diffReceivedSome(some('A Some'), 'A Some with a different value'))
       .toMatchInlineSnapshot(`
-      Difference from Some:
-
-      - Expected
-      + Received
-
-      - A Some with a different value
-      + A Some
+      Expected Some: "A Some with a different value"
+      Received Some: "A Some"
     `);
   });
   test('indicates if a None was recieved', () => {
     expect(diffReceivedSome(none, 'A Some with some value')).toMatchInlineSnapshot(`
       Expected Some: "A Some with some value"
-      Received a None
+      Received None
     `);
   });
   test('handles null values', () => {

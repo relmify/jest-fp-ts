@@ -1,11 +1,11 @@
 import { left as leftEither, right as rightEither } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toStrictEqualRight } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toStrictEqualRight });
 
 class Message {
   message: string;
@@ -66,8 +66,8 @@ describe('.toStrictEqualRight should fail and include the expected and received 
 
       Expected Right: "expected right"
       Received Both:
-        Left: "received left"
-        Right: "received right"
+      Left: "received left"
+      Right: "received right"
     `);
   });
 });
@@ -81,10 +81,8 @@ describe('.toStrictEqualRight should fail and show the difference', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
+      - Expected Right  - 1
+      + Received Right  + 1
 
       - Message {
       + Object {
@@ -98,17 +96,8 @@ describe('.toStrictEqualRight should fail and show the difference', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
-
-        Array [
-          1,
-      -   undefined,
-      +   ,
-          3,
-        ]
+      Expected Right: [1, undefined, 3]
+      Received Right: [1, , 3]
     `);
   });
   test('if received is a Right non-sparse array that serializes to the same value as an expected sparse array', () => {
@@ -117,17 +106,8 @@ describe('.toStrictEqualRight should fail and show the difference', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toStrictEqualRight(expectedRight)
 
-      Difference from Right:
-
-      - Expected
-      + Received
-
-        Array [
-          1,
-      -   ,
-      +   undefined,
-          3,
-        ]
+      Expected Right: [1, , 3]
+      Received Right: [1, undefined, 3]
     `);
   });
 });

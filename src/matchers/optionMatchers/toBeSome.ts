@@ -15,8 +15,25 @@ const failMessage = (received: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Some.
+       */
+      readonly toBeSome: () => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Some.
+       */
+      readonly toBeSome: () => any;
+    }
+  }
+}
+
 /**
- * Checked that the supplied value is a Some
+ * Check that the received value is a Some
  */
 export const toBeSome = (received: unknown): any => {
   const pass = isOption(received) && isSome(received);

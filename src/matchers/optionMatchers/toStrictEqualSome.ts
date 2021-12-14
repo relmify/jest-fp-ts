@@ -1,5 +1,4 @@
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { Option } from 'fp-ts/lib/Option';
 import { applyPredicate } from '../../option/applyPredicate';
 import { isOption, strictEquals } from '../../predicates';
 import { diffReceivedSome } from '../../option/print';
@@ -21,8 +20,31 @@ const failMessage = (received: unknown, expected: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Some that contains a value that strictly equals an expected
+       * value. See Jest's
+       * [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation
+       * for information about how `.toStrictEqual()` differs from `toEqual()`.
+       */
+      readonly toStrictEqualSome: (expected: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Some that contains a value that strictly equals an expected
+       * value. See Jest's
+       * [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation
+       * for information about how `.toStrictEqual()` differs from `toEqual()`.
+       */
+      readonly toStrictEqualSome: (expected: unknown) => any;
+    }
+  }
+}
+
 /**
- * Check that the supplied value is a Some that matches the expected value
+ * Check that the received value is a Some that strictly equals the expected value
  */
 export const toStrictEqualSome = (received: unknown, expected: unknown): any => {
   const predicate = strictEquals(expected);

@@ -1,9 +1,9 @@
 import { left, right, both } from 'fp-ts/lib/These';
-import { matchers } from '../index';
+import { toBeThese } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeThese });
 
 describe('.toBeThese should pass', () => {
   test('if received is a Left', () => {
@@ -62,8 +62,8 @@ describe('.not.toBeThese should fail', () => {
       expect(received).not.toBeThese()
 
       Received Both:
-        Left: "left"
-        Right: "right"
+      Left: "left"
+      Right: "right"
     `);
   });
 });

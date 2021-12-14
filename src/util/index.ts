@@ -4,4 +4,5 @@ export {
   subsetEquality,
   typeEquality,
   sparseArrayEquality,
+  arrayBufferEquality,
 } from 'expect/build/utils';

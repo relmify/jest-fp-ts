@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toBeSome } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeSome });
 
 describe('.toBeSome', () => {
   test('should pass if the received object is a Some', () => {

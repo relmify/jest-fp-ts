@@ -20,4 +20,3 @@ export const applyPredicateLeft =
   (predicate: (leftValue: unknown) => boolean) =>
   (received: EitherOrThese<unknown, unknown>): boolean =>
     fold(predicate, constFalse, constFalse)(received);
-

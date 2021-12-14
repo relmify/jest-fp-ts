@@ -1,5 +1,5 @@
 import { EitherOrThese, fold } from './eitherOrThese';
-import { printExpected, printReceived, diff } from 'jest-matcher-utils';
+import { printExpected, printReceived, printDiffOrStringify } from 'jest-matcher-utils';
 
 /**
  * Construct a string that shows the received Either or These value.
@@ -15,9 +15,8 @@ export function printReceivedValue(
   return fold(
     (left) => `Received Left: ` + padding + `${printReceived(left)}`,
     (right) => `Received Right: ` + padding + `${printReceived(right)}`,
-    (left, right) => `Received Both:
-  Left: ${printReceived(left)}
-  Right: ${printReceived(right)}`,
+    (left, right) =>
+      `Received Both:\n` + `Left: ${printReceived(left)}\n` + `Right: ${printReceived(right)}`,
   )(received);
 }
 
@@ -61,22 +60,7 @@ export function diffReceivedLeft(
   expected: unknown,
 ): string {
   return fold(
-    (left) => {
-      // `diff()` output can be:
-      // - A string that includes '- Expected' that shows the difference between the expected and
-      //   received values
-      // - A string that includes 'Compared values have no visual difference.' that does not include
-      //   the received value since it looks the same as the expected value.
-      // - A string that includes 'Comparing two different types of values. Expected <expectedType>
-      //   but received <receivedType>' that does not include the received value.
-      // - `null` when comparing two numbers since diff() wouldn't add value compared to simply
-      //   printing the expected and received values
-      // - 'null` when one of the values is an asymmetric matcher
-      const diffString = diff(expected, left) || '';
-      return diffString.includes('- Expected') || diffString.includes('no visual difference')
-        ? 'Difference from Left:\n' + '\n' + `${diffString}`
-        : `Expected Left: ${printExpected(expected)}\n` + printReceivedValue(received);
-    },
+    (left) => printDiffOrStringify(expected, left, 'Expected Left', 'Received Left', true),
     () => `Expected Left: ${printExpected(expected)}\n` + printReceivedValue(received),
     () => `Expected Left: ${printExpected(expected)}\n` + printReceivedValue(received),
   )(received);
@@ -91,22 +75,7 @@ export function diffReceivedRight(
 ): string {
   return fold(
     () => `Expected Right: ${printExpected(expected)}\n` + printReceivedValue(received),
-    (right) => {
-      // `diff()` output can be:
-      // - A string that includes '- Expected' that shows the difference between the expected and
-      //   received values
-      // - A string that includes 'Compared values have no visual difference.' that does not include
-      //   the received value since it looks the same as the expected value.
-      // - A string that includes 'Comparing two different types of values. Expected <expectedType>
-      //   but received <receivedType>' that does not include the received value.
-      // - `null` when comparing two numbers since diff() wouldn't add value compared to simply
-      //   printing the expected and received values
-      // - 'null` when one of the values is an asymmetric matcher
-      const diffString = diff(expected, right) || '';
-      return diffString.includes('- Expected') || diffString.includes('no visual difference')
-        ? 'Difference from Right:\n' + '\n' + `${diffString}`
-        : `Expected Right: ${printExpected(expected)}\n` + printReceivedValue(received);
-    },
+    (right) => printDiffOrStringify(expected, right, 'Expected Right', 'Received Right', true),
     () => `Expected Right: ${printExpected(expected)}\n` + printReceivedValue(received),
   )(received);
 }

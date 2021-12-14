@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toSubsetEqualSome } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toSubsetEqualSome });
 
 describe('.toSubsetEqualSome should pass', () => {
   test('if the received is a Some with a subset of properties that match the expected value', () => {
@@ -37,10 +37,8 @@ describe('.toSubsetEqualSome should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
+      - Expected Some  - 1
+      + Received Some  + 0
 
         Object {
       -   "orderId": "123",
@@ -58,10 +56,8 @@ describe('.toSubsetEqualSome should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
+      - Expected Some  - 3
+      + Received Some  + 0
 
         Array [
           Object {
@@ -85,10 +81,8 @@ describe('.toSubsetEqualSome should fail', () => {
     ).toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
+      - Expected Some  - 0
+      + Received Some  + 3
 
         Array [
           Object {
@@ -108,7 +102,7 @@ describe('.toSubsetEqualSome should fail', () => {
       expect(received).toSubsetEqualSome(expectedSome)
 
       Expected Some: "Some"
-      Received a None
+      Received None
     `);
   });
   test('if received is a Some that does not equal the expected value', () => {
@@ -116,13 +110,8 @@ describe('.toSubsetEqualSome should fail', () => {
       .toThrowErrorMatchingInlineSnapshot(`
       expect(received).toSubsetEqualSome(expectedSome)
 
-      Difference from Some:
-
-      - Expected
-      + Received
-
-      - Some
-      + another Some
+      Expected Some: "Some"
+      Received Some: "another Some"
     `);
   });
   test('if received is a Some with a number value that does not equal the expected value', () => {

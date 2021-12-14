@@ -33,8 +33,8 @@ describe('printReceivedValue includes the received value', () => {
     const aBoth = both('Both Left value', 'Both Right value');
     expect(printReceivedValue(aBoth)).toMatchInlineSnapshot(`
       Received Both:
-        Left: "Both Left value"
-        Right: "Both Right value"
+      Left: "Both Left value"
+      Right: "Both Right value"
     `);
   });
 });
@@ -74,13 +74,8 @@ describe('printRecievedValue does not add padding', () => {
 describe('diffReceivedLeft includes the expected and received values', () => {
   test('if a Left with an unexpected value was recieved', () => {
     expect(diffReceivedLeft(left('Left value'), 'Expected value')).toMatchInlineSnapshot(`
-      Difference from Left:
-
-      - Expected
-      + Received
-
-      - Expected value
-      + Left value
+      Expected Left: "Expected value"
+      Received Left: "Left value"
     `);
   });
   test('if a Left with a number value is received', () => {
@@ -100,8 +95,8 @@ describe('diffReceivedLeft includes the expected and received values', () => {
     expect(diffReceivedLeft(aBoth, 'Expected value')).toMatchInlineSnapshot(`
       Expected Left: "Expected value"
       Received Both:
-        Left: "Both Left value"
-        Right: "Both Right value"
+      Left: "Both Left value"
+      Right: "Both Right value"
     `);
   });
 });
@@ -137,13 +132,8 @@ describe('diffReceivedLeft shows the expected and received values when comparing
 describe('diffReceivedRight includes the expected and received values', () => {
   test('if a Right with an unexpected value was recieved', () => {
     expect(diffReceivedRight(right('Right value'), 'Expected value')).toMatchInlineSnapshot(`
-      Difference from Right:
-
-      - Expected
-      + Received
-
-      - Expected value
-      + Right value
+      Expected Right: "Expected value"
+      Received Right: "Right value"
     `);
   });
   test('if a Right with a number value is received', () => {
@@ -163,8 +153,8 @@ describe('diffReceivedRight includes the expected and received values', () => {
     expect(diffReceivedRight(aBoth, 'Expected value')).toMatchInlineSnapshot(`
       Expected Right: "Expected value"
       Received Both:
-        Left: "Both Left value"
-        Right: "Both Right value"
+      Left: "Both Left value"
+      Right: "Both Right value"
     `);
   });
 });

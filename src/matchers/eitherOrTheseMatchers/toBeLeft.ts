@@ -16,8 +16,25 @@ const failMessage = (received: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Left.
+       */
+      readonly toBeLeft: () => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Left.
+       */
+      readonly toBeLeft: () => any;
+    }
+  }
+}
+
 /**
- * Check that the supplied Either is a Left
+ * Check that the received value is a Left
  */
 export const toBeLeft = (received: unknown): any => {
   const pass = isEitherOrThese(received) && isLeft(received);

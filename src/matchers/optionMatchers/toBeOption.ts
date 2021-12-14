@@ -9,8 +9,25 @@ const passMessage = (received: Option<unknown>) => () =>
 const failMessage = (received: unknown) => () =>
   matcherHint('.toBeOption', 'received', '') + '\n\n' + `Received: ${printReceived(received)}`;
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Option (either a Some or a None).
+       */
+      readonly toBeOption: () => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Option (either a Some or a None).
+       */
+      readonly toBeOption: () => any;
+    }
+  }
+}
+
 /**
- * Matches if the received value is an Option
+ * Check that the received value is an Option
  */
 export const toBeOption = (received: unknown): any => {
   const pass = isOption(received);

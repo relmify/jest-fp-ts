@@ -15,8 +15,25 @@ const failMessage = (received: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       *  Used to check if a value is a None.
+       */
+      readonly toBeNone: () => R;
+    }
+    interface Expect {
+      /**
+       *  Used to check if a value is a None.
+       */
+      readonly toBeNone: () => any;
+    }
+  }
+}
+
 /**
- * Check that the supplied value is a None
+ * Check that the received value is a None
  */
 export const toBeNone = (received: unknown): any => {
   const pass = isOption(received) && isNone(received);

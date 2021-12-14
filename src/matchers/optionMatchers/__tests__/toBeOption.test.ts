@@ -1,9 +1,9 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { matchers } from '../index';
+import { toBeOption } from '../../../index';
 import { stripAnsi } from '../../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
-expect.extend(matchers);
+expect.extend({ toBeOption });
 
 describe('.toBeOption should pass', () => {
   test('if received is a None', () => {
@@ -44,7 +44,7 @@ describe('.not.toBeOption should fail', () => {
     expect(() => expect(none).not.toBeOption()).toThrowErrorMatchingInlineSnapshot(`
       expect(received).not.toBeOption()
 
-      Received a None
+      Received None
     `);
   });
   test('if received is a some', () => {

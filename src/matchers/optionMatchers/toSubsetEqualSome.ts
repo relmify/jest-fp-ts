@@ -25,6 +25,47 @@ const failMessage = (received: unknown, expected: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check that the received value is a Some whose value equals the expected value, or
+       * whose value is an object with a subset of properties that match the expected object.
+       *
+       * Objects match if the received object contains all of the properties in the expected object.
+       * The received object may contain extra properties that are not in the expected object and
+       * still match.
+       *
+       * If an array is passed, each element in the expected array is compared to the corresponding
+       * element in the received array. Both arrays must be the same length, and each comparison
+       * must succeed in order to pass.
+       *
+       * Note: `toSubsetEqualSome(value)` is similar to Jest's `toMatchObject(object)` except it
+       * works with both objects and basic types.
+       */
+      readonly toSubsetEqualSome: (expected: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check that the received value is a Some whose value equals the expected value, or
+       * whose value is an object with a subset of properties that match the expected object.
+       *
+       * Objects match if the received object contains all of the properties in the expected object.
+       * The received object may contain extra properties that are not in the expected object and
+       * still match.
+       *
+       * If an array is passed, each element in the expected array is compared to the corresponding
+       * element in the received array. Both arrays must be the same length, and each comparison
+       * must succeed in order to pass.
+       *
+       * Note: `toSubsetEqualSome(value)` is similar to Jest's `toMatchObject(object)` except it
+       * works with both objects and basic types.
+       */
+      readonly toSubsetEqualSome: (expected: unknown) => any;
+    }
+  }
+}
+
 /**
  * @summary
  * Check that the received value is a Some whose value equals the expected value, or whose value is

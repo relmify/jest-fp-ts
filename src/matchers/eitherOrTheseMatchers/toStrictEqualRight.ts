@@ -20,8 +20,31 @@ const failMessage = (received: unknown, expected: unknown) => () => {
         `Received: ${printReceived(received)}`;
 };
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      /**
+       * Used to check if a value is a Right that contains a value that strictly equals an expected
+       * value. See Jest's
+       * [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation
+       * for information about how `.toStrictEqual()` differs from `toEqual()`.
+       */
+      readonly toStrictEqualRight: (expected: unknown) => R;
+    }
+    interface Expect {
+      /**
+       * Used to check if a value is a Right that contains a value that strictly equals an expected
+       * value. See Jest's
+       * [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation
+       * for information about how `.toStrictEqual()` differs from `toEqual()`.
+       */
+      readonly toStrictEqualRight: (expected: unknown) => any;
+    }
+  }
+}
+
 /**
- * Check that the received value is a Right that matches the expected value
+ * Check that the received value is a Right that strictly equals the expected value
  */
 export const toStrictEqualRight = (received: unknown, expected: unknown): any => {
   const predicate = strictEquals(expected);

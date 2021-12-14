@@ -53,43 +53,34 @@ yarn add -D io-ts
 
 ## Setup
 
-Add `@relmify/jest-fp-ts` to your Jest `setupFilesAfterEnv` configuration.
+### Globally add all matchers
+
+To make all `@relmify/jest-fp-ts` matchers globally available in your test files, add
+`@relmify/jest-fp-ts/all` to your Jest `setupFilesAfterEnv` configuration.
 
 See [jest documentation](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array) for
 additional help.
 
-### Setup with package.json
+#### Setup with package.json
 
 In your `package.json` file add:
 
 ```json
 "jest": {
-  "setupFilesAfterEnv": ["@relmify/jest-fp-ts"]
+  "setupFilesAfterEnv": ["@relmify/jest-fp-ts/all"]
 }
 ```
 
-### Setup with jest.config.js
-
-Instead of configuring jest using `package.json`, you can use a `jest.config.js` file to specify the
-`setupFilesAfterEnv` configuration. There you can specify a setup file such as `./jest.setup.js`
-that will require `@relmify/jest-fp-ts`:
+#### Setup with jest.config.js
 
 ```js
 // jest.config.js
 module.exports = {
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['@relmify/jest-fp-ts/all'],
 };
 ```
 
-```js
-// jest.setup.js
-require('@relmify/jest-fp-ts');
-```
-
-If you are using other jest custom matcher packages too, you can `require` them in the same
-`jest.setup.js` file.
-
-### Typescript Editor Support
+#### Typescript Editor Support
 
 If your editor does not recognize the custom `@relmify/jest-fp-ts` matchers, add a `global.d.ts`
 file to your project with:
@@ -98,9 +89,9 @@ file to your project with:
 import '@relmify/jest-fp-ts';
 ```
 
-If your editor still has problems recognizing these matchers, you may need to specifically include
-the `global.d.ts` file in your Typescript configuration using the `"include"` or `"files"` property.
-For example, in `tsconfig.json`:
+If you've added a `global.d.ts` files and your editor still has problems recognizing these matchers,
+you may need to specifically include the `global.d.ts` file in your Typescript configuration using
+the `"include"` or `"files"` property. For example, in `tsconfig.json`:
 
 ```ts
 {
@@ -113,6 +104,44 @@ For example, in `tsconfig.json`:
   "exclude": ["node_modules", "**/__tests__/*"]
 }
 ```
+
+Alternatively, you can add the above import statement in each test file that makes use of
+`@relmify/jest-fp-ts` matchers to resolve this issue.
+
+Note: If you are using Visual Studio Code, you may notice that IntelliSense recognizes the matchers
+if you have another file open that imports from `@relmify/jest-fp-ts`, and then stops recognizing
+the matchers when you close that other file. This can be confusing! The above remedies should help.
+
+### Explicitly Add Specific Matchers
+
+Instead of adding all matchers globally, at the top of your test files you can explicitly import
+only the matchers you need and call `expect.extend()` to make those matchers available:
+
+```ts
+import { toBeLeft, toBeEither } from '@relmify/jest-fp-ts';
+
+expect.extend({ toBeLeft, toBeEither });
+```
+
+Or explicitly import all `@relmify/jest-fp-ts` matchers and add them to `expect`:
+
+```ts
+import { matchers } from '@relmify/jest-fp-ts';
+
+expect.extend(matchers);
+```
+
+#### Note
+
+Importing anything from `@relmify/jest-fp-ts` will extend jest's namespace to include all
+`@relmify/jest-fp-ts` matchers, including those that have not been explicitly imported and added via
+`expect.extend()`. In this case the matchers will appear to be available in your editor but matchers
+that weren't added using `expect.extend()` will fail at runtime. For example, attempting to use
+`.toBeRight` without adding it via `expect.extend()` would result in the error
+`expect(...).toBeRight is not a function`.
+
+To avoid this problem, you can import each matcher directly from the module where it is defined.
+For example, `import { toBeRight } from '@relmify/jest-fp-ts/matchers/eitherOrTheseMatchers/toBeRight';`
 
 ---
 
@@ -312,9 +341,8 @@ expected properties, and may contain more than the expected properties.
 Use `.toBeLeftWithErrorsMatching(Array<string | regex>)` when testing validation errors returned by
 io-ts codec `decode()` operations.
 
-An io-ts type codec `decode` method will return a `left` with an array of ValidationError objects if
+An io-ts type codec `decode()` method will return a Left with an array of ValidationError objects if
 the supplied value does can not be successfully validated and decoded to the specified io-ts type.
-
 For codecs that are composed from multiple codecs, multiple errors may be returned as each sub-codec
 is applied to the values it is charged with validating.
 
@@ -323,7 +351,8 @@ makes use of the io-ts PathReporter module.
 
 To use this matcher, supply an array of strings that you expect to be present in the array of
 strings returned by `PathReporter.report()`. You can supply either regular expressions or
-substrings. The matcher will try to match each array entry against the array of ValidationErrors.
+substrings. The matcher will try to match each array entry against the array of
+`Pathreporter.report()` strings.
 
 If the supplied object is not a Left that contains an array of ValidationErrors, or if any of the
 strings you supply cannot be matched to one of the ValidationErrors, the matcher will return
@@ -346,8 +375,8 @@ backwards-incompatible format. This matcher cannot be used for those types of er
 
 ## Asymmetric Matchers
 
-All of the provided matchers are asymmetric matchers, which means that they can be called from
-any other matcher that accepts asymmetric matchers like so:
+All of the provided matchers are asymmetric matchers, which means that they can be called from any
+other matcher that accepts asymmetric matchers like so:
 
 ```ts
 test('works if called as an asymmetric matcher', () => {

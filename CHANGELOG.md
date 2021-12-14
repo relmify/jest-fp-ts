@@ -7,14 +7,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.0.0] - 2021/12/10
 
-Note that this is a major release which contains some breaking changes. Breaking changes will affect
-you if:
-
-- You are checking for specific failure message strings in some of your tests (for example, if you are
-  expecting certain tests to fail with a particular snapshot message).
-- You have tests that you expect to fail when you are using the `.not` modifier and the received
-  value is not wrapped in the expected `fp-ts` container type.
-
 ### Added
 
 - Custom matchers for values that are wrapped inside an `fp-ts` `These`:
@@ -26,8 +18,11 @@ you if:
 
 ### Changed
 
+- **BREAKING** The setup steps have changed to provide more flexibility.
+
 - **BREAKING** `*Left*` and `*Right*` matchers now officially support both `Either` and `These`
-  types. Documentation and failure messages have been updated accordingly.
+  types. Documentation and failure messages have been updated accordingly. This change will
+  break tests that are expecting specific failure messages.
 - **BREAKING** Matcher failure messages have been adjusted to align more closely with the messages
   returned by similar matchers in jest.
 - **BREAKING** The types for received values in all matchers are now correctly represented as

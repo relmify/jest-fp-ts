@@ -1,10 +1,10 @@
 import * as t from 'io-ts';
 import { PathReporter } from 'io-ts/lib/PathReporter';
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { equals, isValidation, containsMatches } from '../../predicates';
+import { equals, isValidation, containsMatches } from '../predicates';
 import { pipe } from 'fp-ts/lib/function';
 import { isLeft, left } from 'fp-ts/lib/Either';
-import { printReceivedValue } from '../../either/print';
+import { printReceivedValue } from '../either/print';
 
 const passMessage = (received: t.Validation<unknown>, expected: Array<string | RegExp>) => () => {
   const hint =

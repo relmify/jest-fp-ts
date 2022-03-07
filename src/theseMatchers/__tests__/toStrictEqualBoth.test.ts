@@ -1,7 +1,7 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { some, none } from 'fp-ts/lib/Option';
-import { toStrictEqualBoth } from '../../../index';
-import { stripAnsi } from '../../../serializers';
+import { toStrictEqualBoth } from '../../index';
+import { stripAnsi } from '../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toStrictEqualBoth });

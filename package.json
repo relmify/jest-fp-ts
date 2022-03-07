@@ -4,7 +4,6 @@
   "description": "Custom Jest matchers for projects using using fp-ts and io-ts",
   "main": "dist/index.js",
   "files": [
-    "all.js",
     "/dist",
     "!**/*.map",
     "CHANGELOG.md",

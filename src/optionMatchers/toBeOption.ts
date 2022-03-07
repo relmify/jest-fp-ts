@@ -1,6 +1,6 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
-import { isOption } from '../../predicates';
-import { printReceivedOption } from '../../option/print';
+import { isOption } from '../predicates';
+import { printReceivedOption } from '../option/print';
 import { Option } from 'fp-ts/lib/Option';
 
 const passMessage = (received: Option<unknown>) => () =>

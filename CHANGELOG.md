@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2021/12/10
+## [2.0.0] - 2022/02/07
 
 ### Added
 
@@ -18,18 +18,19 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- **BREAKING** The setup steps have changed to provide more flexibility.
-
 - **BREAKING** `*Left*` and `*Right*` matchers now officially support both `Either` and `These`
   types. Documentation and failure messages have been updated accordingly. This change will
   break tests that are expecting specific failure messages.
 - **BREAKING** Matcher failure messages have been adjusted to align more closely with the messages
-  returned by similar matchers in jest.
+  returned by similar matchers in jest. This change will break tests that are expecting specific
+  failure messages.
 - **BREAKING** The types for received values in all matchers are now correctly represented as
   `unknown` and type guards are used to confirm that received values match expected types. Matchers
   that previously threw errors when bad types were received (values not wrapped in the expected
   `fp-ts` container type) now pass when using the `.not` modifier, and fail with better messages
-  without the `.not` modifier.
+  without the `.not` modifier. This change will break tests that are expecting specific failure
+  messages, and tests using the `.not` modifier that were previously expected to fail due to a type
+  error (wrong fp-ts container type, or no fp-ts container).
 - README now demonstrates how asymmetric matchers can be used to specify wildcard expected values.
 - [dev] Internal matcher unit tests now check matcher failure messages against recorded snapshots to
   guard against unintentional breaking interface changes.

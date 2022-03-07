@@ -1,8 +1,8 @@
 import * as t from 'io-ts';
 import { PathReporter } from 'io-ts/lib/PathReporter';
-import { toBeLeftWithErrorsMatching } from '../../../index';
+import { toBeLeftWithErrorsMatching } from '../../index';
 import { left } from 'fp-ts/lib/Either';
-import { stripAnsi } from '../../../serializers';
+import { stripAnsi } from '../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeLeftWithErrorsMatching });

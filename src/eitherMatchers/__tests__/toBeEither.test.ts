@@ -1,7 +1,7 @@
 import { left, right } from 'fp-ts/lib/Either';
 import { left as leftThese, right as rightThese, both } from 'fp-ts/lib/These';
-import { toBeEither } from '../../../index';
-import { stripAnsi } from '../../../serializers';
+import { toBeEither } from '../../index';
+import { stripAnsi } from '../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeEither });

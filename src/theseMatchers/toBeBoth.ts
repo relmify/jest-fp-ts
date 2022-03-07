@@ -1,7 +1,7 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
 import { isBoth, These } from 'fp-ts/lib/These';
-import { isThese } from '../../predicates';
-import { printReceivedValue } from '../../eitherOrThese/print';
+import { isThese } from '../predicates';
+import { printReceivedValue } from '../eitherOrThese/print';
 
 const passMessage = (received: These<unknown, unknown>) => () =>
   matcherHint('.not.toBeBoth', 'received', '') + '\n\n' + `${printReceivedValue(received)}`;

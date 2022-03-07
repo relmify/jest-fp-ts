@@ -1,7 +1,7 @@
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { applyPredicate } from '../../option/applyPredicate';
-import { isOption, equals } from '../../predicates';
-import { diffReceivedSome } from '../../option/print';
+import { applyPredicate } from '../option/applyPredicate';
+import { isOption, equals } from '../predicates';
+import { diffReceivedSome } from '../option/print';
 
 const passMessage = (expected: unknown) => () =>
   matcherHint('.not.toEqualSome', 'received', 'expectedSome') +

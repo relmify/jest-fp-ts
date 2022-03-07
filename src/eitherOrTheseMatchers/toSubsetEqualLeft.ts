@@ -1,8 +1,8 @@
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { applyPredicateLeft } from '../../eitherOrThese/applyPredicate';
-import { subsetEquals, equals, isEitherOrThese } from '../../predicates';
-import { diffReceivedLeft, printReceivedValue } from '../../eitherOrThese/print';
-import { EitherOrThese } from '../../eitherOrThese/eitherOrThese';
+import { applyPredicateLeft } from '../eitherOrThese/applyPredicate';
+import { subsetEquals, equals, isEitherOrThese } from '../predicates';
+import { diffReceivedLeft, printReceivedValue } from '../eitherOrThese/print';
+import { EitherOrThese } from '../eitherOrThese/eitherOrThese';
 import { left } from 'fp-ts/lib/These';
 
 const passMessage = (received: EitherOrThese<unknown, unknown>, expected: unknown) => () => {

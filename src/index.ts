@@ -1,22 +1,39 @@
-export { matchers } from './matchers';
-export { toBeLeftWithErrorsMatching } from './matchers/decodeMatchers/toBeLeftWithErrorsMatching';
-export { toBeEither } from './matchers/eitherMatchers/toBeEither';
-export { toBeLeft } from './matchers/eitherOrTheseMatchers/toBeLeft';
-export { toBeRight } from './matchers/eitherOrTheseMatchers/toBeRight';
-export { toEqualLeft } from './matchers/eitherOrTheseMatchers/toEqualLeft';
-export { toEqualRight } from './matchers/eitherOrTheseMatchers/toEqualRight';
-export { toStrictEqualLeft } from './matchers/eitherOrTheseMatchers/toStrictEqualLeft';
-export { toStrictEqualRight } from './matchers/eitherOrTheseMatchers/toStrictEqualRight';
-export { toSubsetEqualLeft } from './matchers/eitherOrTheseMatchers/toSubsetEqualLeft';
-export { toSubsetEqualRight } from './matchers/eitherOrTheseMatchers/toSubsetEqualRight';
-export { toBeOption } from './matchers/optionMatchers/toBeOption';
-export { toBeNone } from './matchers/optionMatchers/toBeNone';
-export { toBeSome } from './matchers/optionMatchers/toBeSome';
-export { toEqualSome } from './matchers/optionMatchers/toEqualSome';
-export { toStrictEqualSome } from './matchers/optionMatchers/toStrictEqualSome';
-export { toSubsetEqualSome } from './matchers/optionMatchers/toSubsetEqualSome';
-export { toBeThese } from './matchers/theseMatchers/toBeThese';
-export { toBeBoth } from './matchers/theseMatchers/toBeBoth';
-export { toEqualBoth } from './matchers/theseMatchers/toEqualBoth';
-export { toStrictEqualBoth } from './matchers/theseMatchers/toStrictEqualBoth';
-export { toSubsetEqualBoth } from './matchers/theseMatchers/toSubsetEqualBoth';
+import { matchers as decodeMatchers } from './decodeMatchers';
+import { matchers as eitherMatchers } from './eitherMatchers';
+import { matchers as optionMatchers } from './optionMatchers';
+import { matchers as theseMatchers } from './theseMatchers';
+import { matchers as eitherOrTheseMatchers } from './eitherOrTheseMatchers';
+
+const matchers = {
+  ...decodeMatchers,
+  ...eitherMatchers,
+  ...optionMatchers,
+  ...theseMatchers,
+  ...eitherOrTheseMatchers,
+};
+
+export { matchers };
+
+export { toBeLeftWithErrorsMatching } from './decodeMatchers/toBeLeftWithErrorsMatching';
+export { toBeEither } from './eitherMatchers/toBeEither';
+export { toBeLeft } from './eitherOrTheseMatchers/toBeLeft';
+export { toBeRight } from './eitherOrTheseMatchers/toBeRight';
+export { toEqualLeft } from './eitherOrTheseMatchers/toEqualLeft';
+export { toEqualRight } from './eitherOrTheseMatchers/toEqualRight';
+export { toStrictEqualLeft } from './eitherOrTheseMatchers/toStrictEqualLeft';
+export { toStrictEqualRight } from './eitherOrTheseMatchers/toStrictEqualRight';
+export { toSubsetEqualLeft } from './eitherOrTheseMatchers/toSubsetEqualLeft';
+export { toSubsetEqualRight } from './eitherOrTheseMatchers/toSubsetEqualRight';
+export { toBeOption } from './optionMatchers/toBeOption';
+export { toBeNone } from './optionMatchers/toBeNone';
+export { toBeSome } from './optionMatchers/toBeSome';
+export { toEqualSome } from './optionMatchers/toEqualSome';
+export { toStrictEqualSome } from './optionMatchers/toStrictEqualSome';
+export { toSubsetEqualSome } from './optionMatchers/toSubsetEqualSome';
+export { toBeThese } from './theseMatchers/toBeThese';
+export { toBeBoth } from './theseMatchers/toBeBoth';
+export { toEqualBoth } from './theseMatchers/toEqualBoth';
+export { toStrictEqualBoth } from './theseMatchers/toStrictEqualBoth';
+export { toSubsetEqualBoth } from './theseMatchers/toSubsetEqualBoth';
+
+expect.extend(matchers);

@@ -1,7 +1,7 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
 import { Option, isNone } from 'fp-ts/lib/Option';
-import { isOption } from '../../predicates';
-import { printReceivedOption } from '../../option/print';
+import { isOption } from '../predicates';
+import { printReceivedOption } from '../option/print';
 
 const passMessage = (received: Option<unknown>) => () =>
   matcherHint('.not.toBeNone', 'received', '') + '\n\n' + `${printReceivedOption(received)}`;

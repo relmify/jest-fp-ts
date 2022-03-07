@@ -1,8 +1,8 @@
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
 import { Option, some } from 'fp-ts/lib/Option';
-import { applyPredicate } from '../../option/applyPredicate';
-import { isOption, subsetEquals, equals } from '../../predicates';
-import { diffReceivedSome, printReceivedOption } from '../../option/print';
+import { applyPredicate } from '../option/applyPredicate';
+import { isOption, subsetEquals, equals } from '../predicates';
+import { diffReceivedSome, printReceivedOption } from '../option/print';
 
 const passMessage = (received: Option<unknown>, expected: unknown) => () => {
   const hint = matcherHint('.not.toSubsetEqualSome', 'received', 'expectedSome') + '\n\n';

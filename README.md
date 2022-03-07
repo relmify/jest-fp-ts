@@ -53,34 +53,32 @@ yarn add -D io-ts
 
 ## Setup
 
-### Globally add all matchers
-
 To make all `@relmify/jest-fp-ts` matchers globally available in your test files, add
-`@relmify/jest-fp-ts/all` to your Jest `setupFilesAfterEnv` configuration.
+`@relmify/jest-fp-ts` to your Jest `setupFilesAfterEnv` configuration.
 
 See [jest documentation](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array) for
 additional help.
 
-#### Setup with package.json
+### Setup with package.json
 
 In your `package.json` file add:
 
 ```json
 "jest": {
-  "setupFilesAfterEnv": ["@relmify/jest-fp-ts/all"]
+  "setupFilesAfterEnv": ["@relmify/jest-fp-ts"]
 }
 ```
 
-#### Setup with jest.config.js
+### Setup with jest.config.js
 
 ```js
 // jest.config.js
 module.exports = {
-  setupFilesAfterEnv: ['@relmify/jest-fp-ts/all'],
+  setupFilesAfterEnv: ['@relmify/jest-fp-ts'],
 };
 ```
 
-#### Typescript Editor Support
+### Typescript Editor Support
 
 If your editor does not recognize the custom `@relmify/jest-fp-ts` matchers, add a `global.d.ts`
 file to your project with:
@@ -89,7 +87,7 @@ file to your project with:
 import '@relmify/jest-fp-ts';
 ```
 
-If you've added a `global.d.ts` files and your editor still has problems recognizing these matchers,
+If you've added a `global.d.ts` file and your editor still has problems recognizing these matchers,
 you may need to specifically include the `global.d.ts` file in your Typescript configuration using
 the `"include"` or `"files"` property. For example, in `tsconfig.json`:
 
@@ -105,43 +103,8 @@ the `"include"` or `"files"` property. For example, in `tsconfig.json`:
 }
 ```
 
-Alternatively, you can add the above import statement in each test file that makes use of
-`@relmify/jest-fp-ts` matchers to resolve this issue.
-
-Note: If you are using Visual Studio Code, you may notice that IntelliSense recognizes the matchers
-if you have another file open that imports from `@relmify/jest-fp-ts`, and then stops recognizing
-the matchers when you close that other file. This can be confusing! The above remedies should help.
-
-### Explicitly Add Specific Matchers
-
-Instead of adding all matchers globally, at the top of your test files you can explicitly import
-only the matchers you need and call `expect.extend()` to make those matchers available:
-
-```ts
-import { toBeLeft, toBeEither } from '@relmify/jest-fp-ts';
-
-expect.extend({ toBeLeft, toBeEither });
-```
-
-Or explicitly import all `@relmify/jest-fp-ts` matchers and add them to `expect`:
-
-```ts
-import { matchers } from '@relmify/jest-fp-ts';
-
-expect.extend(matchers);
-```
-
-#### Note
-
-Importing anything from `@relmify/jest-fp-ts` will extend jest's namespace to include all
-`@relmify/jest-fp-ts` matchers, including those that have not been explicitly imported and added via
-`expect.extend()`. In this case the matchers will appear to be available in your editor but matchers
-that weren't added using `expect.extend()` will fail at runtime. For example, attempting to use
-`.toBeRight` without adding it via `expect.extend()` would result in the error
-`expect(...).toBeRight is not a function`.
-
-To avoid this problem, you can import each matcher directly from the module where it is defined.
-For example, `import { toBeRight } from '@relmify/jest-fp-ts/matchers/eitherOrTheseMatchers/toBeRight';`
+Alternatively, you can resolve this issue by adding `import '@relmify/jest-fp-ts';` to each test
+file that makes use of `@relmify/jest-fp-ts` matchers.
 
 ---
 
@@ -161,21 +124,21 @@ For example, `import { toBeRight } from '@relmify/jest-fp-ts/matchers/eitherOrTh
     - [.toStrictEqualRight(value)](#toStrictEqualRightValue)
     - [.toSubsetEqualLeft(value)](#toSubsetEqualLeftValue)
     - [.toSubsetEqualRight(value)](#toSubsetEqualRightValue)
-  - [These Matchers](#these-Matchers)
+  - [These Matchers](#these-matchers)
     - [.toBeBoth()](#toBeBoth)
     - [.toBeThese()](#toBeThese)
     - [.toEqualBoth(leftValue, rightValue)](#toEqualBothLeftValue-RightValue)
     - [.toStrictEqualBoth(leftValue, rightValue)](#toStrictEqualBothLeftValue-RightValue)
     - [.toSubsetEqualBoth(leftValue, rightvalue)](#toSubsetEqualBothLeftValue-RightValue)
-  - [Option Matchers](#optionMatchers)
+  - [Option Matchers](#option-matchers)
     - [.toBeNone()](#toBeNone)
     - [.toBeOption()](#toBeOption)
     - [.toBeSome()](#toBeSome)
     - [.toEqualSome(value)](#toEqualSomeValue)
     - [.toStrictEqualSome(value)](#toStrictEqualSomeValue)
     - [.toSubsetEqualSome(value)](#toSubsetEqualSomeValue)
-  - [Decode Matchers](#decodeMatchers)
-    - [.toBeLeftWithErrorsMatching(value)](#toBeLeftWithErrorsMatchingValue)
+  - [Decode Matchers](#decode-matchers)
+    - [.toBeLeftWithErrorsMatching(Array&lt;string | regex>)](#toBeLeftWithErrorsMatchingArrayltstring--regex)
 - [Asymmetric matchers](#asymmetric-matchers)
 - [LICENSE](#license)
 - [Contributing](#contributing)
@@ -207,13 +170,13 @@ Use `.toBeRight()` to check if a value is a Right.
 #### .toEqualLeft(value)
 
 Use `.toEqualLeft(value)` to check if a value is a Left whose value equals an expected value. See
-Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor information
+Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentation for information
 about how the `.toEqual()` comparison works.
 
 #### .toEqualRight(value)
 
 Use `.toEqualRight(value)` to check if a value is a Right whose value equals an expected value. See
-Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor information
+Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentation for information
 about how the `.toEqual()` comparison works.
 
 #### .toStrictEqualLeft(value)
@@ -294,10 +257,9 @@ received value is an object with a subset of properties that match the expected 
 value must contain all of the expected properties, and may contain more than the expected
 properties.
 
-If you pass an array as the expected You can also pass arrays of values to match against received
-values that contain arrays of values. In this case, each value in the expected array is compared
-against the corresponding value in the array contained in the received. Both arrays must be the same
-length or the match will fail.
+You can also pass arrays of values to match against received values that contain arrays of values.
+In this case, each value in the expected array is compared against the corresponding value in the
+array contained in the received. Both arrays must be the same length or the match will fail.
 
 Note that an empty expected object will match against any received object.
 
@@ -370,8 +332,11 @@ test('if the received is a Left that contains errors matching the expected value
 });
 ```
 
-Note: There is a new experimental io-ts interface that returns decode errors in a different,
-backwards-incompatible format. This matcher cannot be used for those types of errors.
+**Note:**
+
+This matcher supports the current (stable) io-ts interface. There is a new experimental io-ts
+decoder interface that returns `Either<DecodeError, A>` results instead. This matcher does not
+support that interface.
 
 ## Asymmetric Matchers
 

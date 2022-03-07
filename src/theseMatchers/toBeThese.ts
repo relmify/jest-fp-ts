@@ -1,6 +1,6 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
-import { isThese } from '../../predicates';
-import { printReceivedValue } from '../../eitherOrThese/print';
+import { isThese } from '../predicates';
+import { printReceivedValue } from '../eitherOrThese/print';
 import { These } from 'fp-ts/lib/These';
 
 const passMessage = (received: These<unknown, unknown>) => () =>

@@ -1,6 +1,6 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { toSubsetEqualSome } from '../../../index';
-import { stripAnsi } from '../../../serializers';
+import { toSubsetEqualSome } from '../../index';
+import { stripAnsi } from '../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toSubsetEqualSome });

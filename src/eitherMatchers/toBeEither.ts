@@ -1,6 +1,6 @@
 import { matcherHint, printReceived } from 'jest-matcher-utils';
-import { isEither } from '../../predicates';
-import { printReceivedValue } from '../../either/print';
+import { isEither } from '../predicates';
+import { printReceivedValue } from '../either/print';
 import { Either } from 'fp-ts/lib/Either';
 
 const passMessage = (received: Either<unknown, unknown>) => () =>

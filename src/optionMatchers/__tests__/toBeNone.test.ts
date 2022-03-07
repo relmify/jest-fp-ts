@@ -1,6 +1,6 @@
 import { some, none } from 'fp-ts/lib/Option';
-import { toBeNone } from '../../../index';
-import { stripAnsi } from '../../../serializers';
+import { toBeNone } from '../../index';
+import { stripAnsi } from '../../serializers';
 
 expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeNone });

@@ -1,7 +1,7 @@
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
-import { applyPredicateLeft } from '../../eitherOrThese/applyPredicate';
-import { strictEquals, isEitherOrThese } from '../../predicates';
-import { diffReceivedLeft } from '../../eitherOrThese/print';
+import { applyPredicateLeft } from '../eitherOrThese/applyPredicate';
+import { strictEquals, isEitherOrThese } from '../predicates';
+import { diffReceivedLeft } from '../eitherOrThese/print';
 
 const passMessage = (expected: unknown) => () =>
   matcherHint('.not.toStrictEqualLeft', 'received', 'expectedLeft') +

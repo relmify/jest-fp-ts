@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2022/02/07
+## [2.0.0] - 2022/02/09
 
 ### Added
 
@@ -31,7 +31,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   without the `.not` modifier. This change will break tests that are expecting specific failure
   messages, and tests using the `.not` modifier that were previously expected to fail due to a type
   error (wrong fp-ts container type, or no fp-ts container).
-- README now demonstrates how asymmetric matchers can be used to specify wildcard expected values.
+- README updated to show how asymmetric matchers can be used to specify wildcard expected values.
 - [dev] Internal matcher unit tests now check matcher failure messages against recorded snapshots to
   guard against unintentional breaking interface changes.
 - [dev] Updated jest config to use `@relmify/jest-serializer-strip-ansi/always` and
@@ -40,7 +40,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- Updated `tsconfig.json` so VS Code Intellisense works in matcher unit tests.
+- [dev] VS Code Intellisense now works in internal matcher unit tests.
 
 ## [1.1.1] - 2020/07/21
 

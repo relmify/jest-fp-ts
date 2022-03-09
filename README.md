@@ -1,5 +1,7 @@
 # Jest Matchers for the fp-ts ecosystem
 
+[![Build](https://github.com/relmify/jest-fp-ts/actions/workflows/main.yml/badge.svg)](https://github.com/relmify/jest-fp-ts/actions/workflows/main.yml)
+
 Jest matchers for projects using `fp-ts` and `io-ts`.
 
 ## Problem

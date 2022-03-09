@@ -3,6 +3,7 @@
   "version": "1.1.1",
   "description": "Custom Jest matchers for projects using using fp-ts and io-ts",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "/dist",
     "!**/*.map",
@@ -51,6 +52,7 @@
     "io-ts": "2.x"
   },
   "devDependencies": {
+    "@relmify/jest-serializer-strip-ansi": "^1.0.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^5.4.0",

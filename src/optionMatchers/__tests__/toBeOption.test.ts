@@ -1,8 +1,6 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { toBeOption } from '../../index';
-import { stripAnsi } from '../../serializers';
 
-expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeOption });
 
 describe('.toBeOption should pass', () => {

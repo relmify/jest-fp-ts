@@ -1,8 +1,6 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { toStrictEqualSome } from '../../index';
-import { stripAnsi } from '../../serializers';
 
-expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toStrictEqualSome });
 
 class Message {

@@ -1,8 +1,5 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { diffReceivedBoth } from '../print';
-import { stripAnsi } from '../../serializers';
-
-expect.addSnapshotSerializer(stripAnsi);
 
 describe('diffReceivedBoth includes the expected and received values when a Both is received', () => {
   test('if an unexpected left value is received', () => {

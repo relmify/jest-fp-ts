@@ -1,8 +1,5 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { printReceivedValue, diffReceivedLeft, diffReceivedRight } from '../print';
-import { stripAnsi } from '../../serializers';
-
-expect.addSnapshotSerializer(stripAnsi);
 
 describe('printReceivedValue includes the received value', () => {
   test('if a Left with a string value is received', () => {

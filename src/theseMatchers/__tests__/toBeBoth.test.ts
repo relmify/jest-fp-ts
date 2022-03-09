@@ -1,8 +1,6 @@
 import { left, right, both } from 'fp-ts/lib/These';
 import { toBeBoth } from '../../index';
-import { stripAnsi } from '../../serializers';
 
-expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeBoth });
 
 describe('.toBeBoth should pass', () => {

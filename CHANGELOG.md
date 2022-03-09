@@ -34,10 +34,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - README now demonstrates how asymmetric matchers can be used to specify wildcard expected values.
 - [dev] Internal matcher unit tests now check matcher failure messages against recorded snapshots to
   guard against unintentional breaking interface changes.
-- [dev] Added a custom snapshot serialzer that strips ansi escape codes in snapshots for improved
-  snapshot readability in internal unit tests.
-- [dev] Updated jest config to use the jest-snapshot-serializer-raw for improved snapshot
-  readability in internal unit tests.
+- [dev] Updated jest config to use `@relmify/jest-serializer-strip-ansi/always` and
+  `jest-snapshot-serializer-raw/always` for improved snapshot readability in internal unit tests.
 - [dev] Updated dependencies to their latest versions.
 
 ### Fixed

@@ -1,8 +1,6 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { toEqualSome } from '../../index';
-import { stripAnsi } from '../../serializers';
 
-expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toEqualSome });
 
 describe('.toEqualSome should pass', () => {

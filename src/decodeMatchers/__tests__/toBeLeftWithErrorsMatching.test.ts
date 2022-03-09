@@ -2,9 +2,7 @@ import * as t from 'io-ts';
 import { PathReporter } from 'io-ts/lib/PathReporter';
 import { toBeLeftWithErrorsMatching } from '../../index';
 import { left } from 'fp-ts/lib/Either';
-import { stripAnsi } from '../../serializers';
 
-expect.addSnapshotSerializer(stripAnsi);
 expect.extend({ toBeLeftWithErrorsMatching });
 
 const Name = t.type({
@@ -25,14 +23,6 @@ describe('.toBeLeftWithErrorsMatching should pass', () => {
   test('if called as an asymmetric matcher', () => {
     const numberName = { first: 1, last: 2 };
     expect(Name.decode(numberName)).toEqual(expect.toBeLeftWithErrorsMatching(['1', '2']));
-  });
-  // TODO: Check if this kind of test works with similar Jest matchers
-  test.skip('if called with asymmetric matchers', () => {
-    const numberName = { first: 1, last: 2 };
-    expect(Name.decode(numberName)).toBeLeftWithErrorsMatching([
-      expect.stringContaining('1'),
-      expect.stringContaining('2'),
-    ]);
   });
   test('if a decode fails due to a null value', () => {
     expect(Name.decode(null)).toBeLeftWithErrorsMatching(['null']);
@@ -116,6 +106,22 @@ describe('.toBeLeftWithErrorsMatching should fail', () => {
       Received: 1
     `);
   });
+  // Use regex expressions instead of expect.stringContaining or similar - or see 'Alternative ways
+  // to test validation errors' below
+  test('if called with an asymmetric matcher', () => {
+    const numberName = { first: 1, last: 2 };
+    expect(() =>
+      expect(Name.decode(numberName)).toBeLeftWithErrorsMatching([
+        expect.stringContaining('1'),
+        expect.stringContaining('2'),
+      ]),
+    ).toThrowErrorMatchingInlineSnapshot(`
+      expect(received).toBeLeftWithErrorsMatching(expectedErrorsMatching)
+
+      Expected Errors: [StringContaining "1", StringContaining "2"]
+      Received Errors: ["Invalid value 1 supplied to : { first: string, last: string }/first: string", "Invalid value 2 supplied to : { first: string, last: string }/last: string"]
+    `);
+  });
 });
 
 describe('.not.toBeLeftWithErrorsMatching should pass', () => {
@@ -155,7 +161,7 @@ describe('Alternative ways to test validation errors', () => {
   test('The number 1 and the value undefined are invalid values for the t.string codec', () => {
     expect(validation).toBeLeftWithErrorsMatching(['1', /undefined/]);
   });
-  test('Stasndard asymmetric matchers can be used to test for strings within pathReporter output', () => {
+  test('Standard asymmetric matchers can be used to test for strings within pathReporter output', () => {
     expect(errorStrings).toEqual(
       expect.arrayContaining([expect.stringMatching('1'), expect.stringMatching(/undefined/)]),
     );

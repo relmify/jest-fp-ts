@@ -1,8 +1,5 @@
 import { left, right } from 'fp-ts/lib/Either';
 import { printReceivedValue } from '../print';
-import { stripAnsi } from '../../serializers';
-
-expect.addSnapshotSerializer(stripAnsi);
 
 describe('printReceivedValue includes the received value', () => {
   test('if a Left with a string value is received', () => {

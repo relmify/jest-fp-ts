@@ -44,7 +44,7 @@ declare global {
        * supplied strings or regular expressions.
        *
        * @description
-       * An io-ts type codec `decode()` method will return a Left with an array of ValidationError
+       * An io-ts type codec `decode()` method will return a Left with an array of `ValidationError`
        * objects if the supplied value can not be successfully validated and decoded to the
        * specified io-ts type.
        *
@@ -91,7 +91,7 @@ declare global {
        *  });
        *
        *  test('Snapshot tests can be used to test full pathReporter output if you prefer', () => {
-       *    // Custom snapshot serializers are used to removed escape characters in snapshot text
+       *    // Using `@relmify/jest-serializer-strip-ansi` and `jest-snapshot-serializer-raw`
        *    expect(errorStrings).toMatchInlineSnapshot(`
        *      Array [
        *        Invalid value 1 supplied to : { first: string, last: string }/first: string,
@@ -111,9 +111,9 @@ declare global {
        * supplied strings or regular expressions.
        *
        * @description
-       * An io-ts type codec `decode()` method will return a Left with an array of ValidationError
-       * objects if the supplied value can not be successfully validated and decoded to the
-       * specified io-ts type.
+       * An io-ts `decode()` method will return a Left with an array of `ValidationError` objects if
+       * the supplied value can not be successfully validated and decoded to the specified io-ts
+       * type.
        *
        * For codecs that are composed from multiple codecs, multiple errors may be returned as each
        * sub-codec is applied to the values it is charged with validating.
@@ -158,7 +158,7 @@ declare global {
        *  });
        *
        *  test('Snapshot tests can be used to test full pathReporter output if you prefer', () => {
-       *    // Custom snapshot serializers are used to removed escape characters in snapshot text
+       *    // Using `@relmify/jest-serializer-strip-ansi` and `jest-snapshot-serializer-raw`
        *    expect(errorStrings).toMatchInlineSnapshot(`
        *      Array [
        *        Invalid value 1 supplied to : { first: string, last: string }/first: string,

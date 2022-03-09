@@ -1,8 +1,5 @@
 import { some, none } from 'fp-ts/lib/Option';
 import { printReceivedOption, diffReceivedSome } from '../print';
-import { stripAnsi } from '../../serializers';
-
-expect.addSnapshotSerializer(stripAnsi);
 
 describe('printReceivedOption', () => {
   test('includes the received value if a Some with a string value is received', () => {

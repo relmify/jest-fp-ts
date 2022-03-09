@@ -301,12 +301,12 @@ expected properties, and may contain more than the expected properties.
 #### .toBeLeftWithErrorsMatching(Array&lt;string | regex>)
 
 Use `.toBeLeftWithErrorsMatching(Array<string | regex>)` when testing validation errors returned by
-io-ts codec `decode()` operations.
+io-ts `decode()` operations.
 
-An io-ts type codec `decode()` method will return a Left with an array of ValidationError objects if
-the supplied value does can not be successfully validated and decoded to the specified io-ts type.
-For codecs that are composed from multiple codecs, multiple errors may be returned as each sub-codec
-is applied to the values it is charged with validating.
+An io-ts `decode()` method will return a Left with an array of `ValidationError` objects if the
+supplied value can not be successfully validated and decoded to the specified io-ts type. For codecs
+that are composed from multiple codecs, multiple errors may be returned as each sub-codec is applied
+to the values it is charged with validating.
 
 This matcher provides an easy way to check if expected validation errors are present. To do this, it
 makes use of the io-ts PathReporter module.
@@ -319,6 +319,8 @@ substrings. The matcher will try to match each array entry against the array of
 If the supplied object is not a Left that contains an array of ValidationErrors, or if any of the
 strings you supply cannot be matched to one of the ValidationErrors, the matcher will return
 `false`. If all of the strings you supply are matched, it will return `true`.
+
+Example:
 
 ```ts
 const Name = t.type({
@@ -365,11 +367,162 @@ test('works if called with an asymmetric matcher', () => {
 });
 ```
 
+The `.toBeLeftWithErrorsMatching(Array&lt;string | regex>)` matcher does not accept asymmetric
+matchers. You can use standard jest matchers to achieve similar results like so:
+
+```ts
+import * as t from 'io-ts';
+import { PathReporter } from 'io-ts/lib/PathReporter';
+import { toBeLeftWithErrorsMatching } from '@relmify/jest-fp-ts';
+import { left } from 'fp-ts/lib/Either';
+
+expect.extend({ toBeLeftWithErrorsMatching });
+
+const Name = t.type({
+  first: t.string,
+  last: t.string,
+});
+type Name = t.TypeOf<typeof Name>;
+
+const receivedName = { first: 1, last: undefined };
+const validation = Name.decode(receivedName);
+const errorStrings = PathReporter.report(validation);
+
+// Snapshots below use `@relmify/jest-serializer-strip-ansi` and `jest-snapshot-serializer-raw` to produce
+// more readable snapshot output.
+describe('Alternative ways to test validation errors', () => {
+  test('Standard asymmetric matchers can be used to test for strings within pathReporter output', () => {
+    expect(errorStrings).toEqual(
+      expect.arrayContaining([expect.stringMatching('1'), expect.stringMatching(/undefined/)]),
+    );
+  });
+  test('Standard snapshot tests can be used to test full pathReporter output', () => {
+    expect(errorStrings).toMatchInlineSnapshot(`
+      Array [
+        Invalid value 1 supplied to : { first: string, last: string }/first: string,
+        Invalid value undefined supplied to : { first: string, last: string }/last: string,
+      ]
+    `);
+  });
+  test('Standard snapshot tests can be used to test the raw array of validation errors (verbose!)', () => {
+    expect(validation).toMatchInlineSnapshot(`
+      Object {
+        _tag: Left,
+        left: Array [
+          Object {
+            context: Array [
+              Object {
+                actual: Object {
+                  first: 1,
+                  last: undefined,
+                },
+                key: ,
+                type: InterfaceType {
+                  _tag: InterfaceType,
+                  decode: [Function],
+                  encode: [Function],
+                  is: [Function],
+                  name: { first: string, last: string },
+                  props: Object {
+                    first: StringType {
+                      _tag: StringType,
+                      decode: [Function],
+                      encode: [Function],
+                      is: [Function],
+                      name: string,
+                      validate: [Function],
+                    },
+                    last: StringType {
+                      _tag: StringType,
+                      decode: [Function],
+                      encode: [Function],
+                      is: [Function],
+                      name: string,
+                      validate: [Function],
+                    },
+                  },
+                  validate: [Function],
+                },
+              },
+              Object {
+                actual: 1,
+                key: first,
+                type: StringType {
+                  _tag: StringType,
+                  decode: [Function],
+                  encode: [Function],
+                  is: [Function],
+                  name: string,
+                  validate: [Function],
+                },
+              },
+            ],
+            message: undefined,
+            value: 1,
+          },
+          Object {
+            context: Array [
+              Object {
+                actual: Object {
+                  first: 1,
+                  last: undefined,
+                },
+                key: ,
+                type: InterfaceType {
+                  _tag: InterfaceType,
+                  decode: [Function],
+                  encode: [Function],
+                  is: [Function],
+                  name: { first: string, last: string },
+                  props: Object {
+                    first: StringType {
+                      _tag: StringType,
+                      decode: [Function],
+                      encode: [Function],
+                      is: [Function],
+                      name: string,
+                      validate: [Function],
+                    },
+                    last: StringType {
+                      _tag: StringType,
+                      decode: [Function],
+                      encode: [Function],
+                      is: [Function],
+                      name: string,
+                      validate: [Function],
+                    },
+                  },
+                  validate: [Function],
+                },
+              },
+              Object {
+                actual: undefined,
+                key: last,
+                type: StringType {
+                  _tag: StringType,
+                  decode: [Function],
+                  encode: [Function],
+                  is: [Function],
+                  name: string,
+                  validate: [Function],
+                },
+              },
+            ],
+            message: undefined,
+            value: undefined,
+          },
+        ],
+      }
+    `);
+  });
+});
+```
+
 ## LICENSE
 
 [MIT](/LICENSE)
 
 ## Contributing
 
-If you've come here to help contribute - Thanks! Take a look at [contributing](/CONTRIBUTING.md) to
+If you've come here to help contribute - Thanks! Take a look at [CONTRIBUTING](/CONTRIBUTING.md) to
 see how to get started.

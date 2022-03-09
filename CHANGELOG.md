@@ -15,10 +15,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - `.toEqualBoth(leftValue, rightValue)`
   - `.toStrictEqualBoth(leftValue, rightValue)`
   - `.toSubsetEqualBoth(leftValue, rightValue)`
+- Intellisense descriptions for all matchers.
 
 ### Changed
 
-- **BREAKING** `*Left*` and `*Right*` matchers now officially support both `Either` and `These`
+- **BREAKING** All `Left` and `Right` matchers now officially support both `Either` and `These`
   types. Documentation and failure messages have been updated accordingly. This change will
   break tests that are expecting specific failure messages.
 - **BREAKING** Matcher failure messages have been adjusted to align more closely with the messages

@@ -1,4 +1,4 @@
-import { equals } from '../util';
+import { equals } from '@jest/expect-utils';
 
 /**
  * Returns true if the received array contains the expected value

@@ -5,7 +5,7 @@ import {
   sparseArrayEquality,
   arrayBufferEquality,
   subsetEquality,
-} from '../util';
+} from '@jest/expect-utils';
 
 /**
  * Returns `true` if the shape and value of the received object or primitive is equal

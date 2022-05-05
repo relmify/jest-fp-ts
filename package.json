@@ -43,9 +43,10 @@
     "prepare": "npm run clean && npm run lint:check && npm run prettier:check && npm test && npm run build"
   },
   "dependencies": {
-    "expect": "^27.3.1",
-    "jest-get-type": "^27.3.1",
-    "jest-matcher-utils": "^27.3.1"
+    "@jest/expect-utils": "^28.0.2",
+    "expect": "^28.0.2",
+    "jest-get-type": "^28.0.2",
+    "jest-matcher-utils": "^28.0.2"
   },
   "peerDependencies": {
     "fp-ts": "2.x",
@@ -64,11 +65,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "fp-ts": "^2.11.5",
     "io-ts": "^2.2.16",
-    "jest": "^27.3.1",
+    "jest": "^28.0.3",
     "jest-snapshot-serializer-raw": "^1.2.0",
     "jest-watch-toggle-config": "^2.0.1",
     "prettier": "^2.4.1",
-    "ts-jest": "^27.0.7",
+    "ts-jest": "^28.0.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   }

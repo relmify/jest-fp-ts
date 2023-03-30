@@ -8,7 +8,7 @@ Jest matchers for projects using `fp-ts` and `io-ts`.
 
 If your TypeScript project is written in a functional programming style using `fp-ts` and `io-ts`,
 many of the values you'll want to check in your unit tests will come wrapped inside container types
-like Either, Option, or These. Jest has no awareness of these container types and no built-in
+like `Either`, `Option`, or `These`. Jest has no awareness of these container types and no built-in
 matchers to help you to compare wrapped values against un-wrapped values. This leaves you with two
 options:
 
@@ -20,7 +20,7 @@ writing your tests, and making it harder to read and maintain them.
 
 ## Solution
 
-`@relmify/jest-fp-ts` aims to add additional matchers to Jest's default ones, making it easier to
+`@relmify/jest-fp-ts` adds additional matchers to Jest's default ones, making it easier to
 test code that makes use of `fp-ts` functional containers.
 
 ## Installation
@@ -116,31 +116,32 @@ file that makes use of `@relmify/jest-fp-ts` matchers.
 - [Setup](#setup)
 - [Matchers](#matchers)
   - [Either Matchers](#either-matchers)
-    - [.toBeEither()](#toBeEither)
+    - [.toBeEither()](#tobeeither)
   - [Either or These Matchers](#either-or-these-matchers)
-    - [.toBeLeft()](#toBeLeft)
-    - [.toBeRight()](#toBeRight)
-    - [.toEqualLeft(value)](#toEqualLeftValue)
-    - [.toEqualRight(value)](#toEqualRightValue)
-    - [.toStrictEqualLeft(value)](#toStrictEqualLeftValue)
-    - [.toStrictEqualRight(value)](#toStrictEqualRightValue)
-    - [.toSubsetEqualLeft(value)](#toSubsetEqualLeftValue)
-    - [.toSubsetEqualRight(value)](#toSubsetEqualRightValue)
+    - [.toBeLeft()](#tobeleft)
+    - [.toBeLeftErrorMatching(string | RegExp)](#tobelefterrormatchingstring--regexp)
+    - [.toBeRight()](#toberight)
+    - [.toEqualLeft(value)](#toequalleftvalue)
+    - [.toEqualRight(value)](#toequalrightvalue)
+    - [.toStrictEqualLeft(value)](#tostrictequalleftvalue)
+    - [.toStrictEqualRight(value)](#tostrictequalrightvalue)
+    - [.toSubsetEqualLeft(value)](#tosubsetequalleftvalue)
+    - [.toSubsetEqualRight(value)](#tosubsetequalrightvalue)
   - [These Matchers](#these-matchers)
-    - [.toBeBoth()](#toBeBoth)
-    - [.toBeThese()](#toBeThese)
-    - [.toEqualBoth(leftValue, rightValue)](#toEqualBothLeftValue-RightValue)
-    - [.toStrictEqualBoth(leftValue, rightValue)](#toStrictEqualBothLeftValue-RightValue)
-    - [.toSubsetEqualBoth(leftValue, rightvalue)](#toSubsetEqualBothLeftValue-RightValue)
+    - [.toBeBoth()](#tobeboth)
+    - [.toBeThese()](#tobethese)
+    - [.toEqualBoth(leftValue, rightValue)](#toequalbothleftvalue-rightvalue)
+    - [.toStrictEqualBoth(leftValue, rightValue)](#tostrictequalbothleftvalue-rightvalue)
+    - [.toSubsetEqualBoth(leftValue, rightvalue)](#tosubsetequalbothleftvalue-rightvalue)
   - [Option Matchers](#option-matchers)
-    - [.toBeNone()](#toBeNone)
-    - [.toBeOption()](#toBeOption)
-    - [.toBeSome()](#toBeSome)
-    - [.toEqualSome(value)](#toEqualSomeValue)
-    - [.toStrictEqualSome(value)](#toStrictEqualSomeValue)
-    - [.toSubsetEqualSome(value)](#toSubsetEqualSomeValue)
+    - [.toBeNone()](#tobenone)
+    - [.toBeOption()](#tobeoption)
+    - [.toBeSome()](#tobesome)
+    - [.toEqualSome(value)](#toequalsomevalue)
+    - [.toStrictEqualSome(value)](#tostrictequalsomevalue)
+    - [.toSubsetEqualSome(value)](#tosubsetequalsomevalue)
   - [Decode Matchers](#decode-matchers)
-    - [.toBeLeftWithErrorsMatching(Array&lt;string | regex>)](#toBeLeftWithErrorsMatchingArrayltstring--regex)
+    - [.toBeLeftWithErrorsMatching(Array&lt;string | RegExp>)](#tobeleftwitherrorsmatchingarraystring--regexp)
 - [Asymmetric matchers](#asymmetric-matchers)
 - [LICENSE](#license)
 - [Contributing](#contributing)
@@ -151,109 +152,115 @@ file that makes use of `@relmify/jest-fp-ts` matchers.
 
 #### .toBeEither()
 
-Use `.toBeEither()` to check if a value is consistent with an Either. In other words, this matcher
-confirms that the value is a Left or a Right.
+Use `.toBeEither()` to check if a value is consistent with an `Either`. In other words, this matcher
+confirms that the value is a `Left` or a `Right`.
 
-Note that a Left or a Right value is also consistent with a These and would also pass a
+Note that a `Left` or a `Right` value is also consistent with a `These` and would also pass a
 `.toBeThese()` test.
 
 ### Either or These Matchers
 
-The matchers below can be used for Left and Right Either or These values.
+The matchers below can be used for `Left` and `Right` values from an `Either` or a `These`.
 
 #### .toBeLeft()
 
-Use `.toBeLeft()` to check if a value is a Left.
+Use `.toBeLeft()` to check if a value is a `Left`.
+
+#### .toBeLeftErrorMatching(string | RegExp)
+
+Use `.toBeLeftErrorMatching(string | RegExp)` to check if a value is a `Left` whose value is an
+instance of `Error` with a `message` property that contains the supplied string or matches the
+supplied `RegExp`.
 
 #### .toBeRight()
 
-Use `.toBeRight()` to check if a value is a Right.
+Use `.toBeRight()` to check if a value is a `Right`.
 
 #### .toEqualLeft(value)
 
-Use `.toEqualLeft(value)` to check if a value is a Left whose value equals an expected value. See
+Use `.toEqualLeft(value)` to check if a value is a `Left` whose value equals an expected value. See
 Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentation for information
 about how the `.toEqual()` comparison works.
 
 #### .toEqualRight(value)
 
-Use `.toEqualRight(value)` to check if a value is a Right whose value equals an expected value. See
+Use `.toEqualRight(value)` to check if a value is a `Right` whose value equals an expected value. See
 Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentation for information
 about how the `.toEqual()` comparison works.
 
 #### .toStrictEqualLeft(value)
 
-Use `.toStrictEqualLeft(value)` to check if a value is a Left that contains a value that strictly
+Use `.toStrictEqualLeft(value)` to check if a value is a `Left` that contains a value that strictly
 equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
 #### .toStrictEqualRight(value)
 
-Use `.toStrictEqualRight(value)` to check if a value is a Right that contains a value that strictly
+Use `.toStrictEqualRight(value)` to check if a value is a `Right` that contains a value that strictly
 equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
 #### .toSubsetEqualLeft(value)
 
-Use `.toSubsetEqualLeft(value)` to check if a value is a Left whose value equals or subset matches
-the expected value. A subset match passes when the received value is a Left whose value is an object
+Use `.toSubsetEqualLeft(value)` to check if a value is a `Left` whose value equals or subset matches
+the expected value. A subset match passes when the received value is a `Left` whose value is an object
 with a subset of properties that match the expected object. The received value must contain all of
 the expected properties, and may contain more than the expected properties.
 
-You can also pass an array of values to match against a received Left value that is an array of
+You can also pass an array of values to match against a received `Left` value that is an array of
 values. In this case, each value in the expected array is compared against the corresponding value
-in the array contained in the received Left. Both arrays must be the same length or the match will
+in the array contained in the received `Left`. Both arrays must be the same length or the match will
 fail.
 
-Note that an empty expected object will match against any received Left whose value is an object.
+Note that an empty expected object will match against any received `Left` whose value is an object.
 
 #### .toSubsetEqualRight(value)
 
-Use `.toSubsetEqualRight(value)` to check if a value is a Right whose value equals or subset matches
-the expected value. A subset match passes when the received value is a Right whose value is an
+Use `.toSubsetEqualRight(value)` to check if a value is a `Right` whose value equals or subset matches
+the expected value. A subset match passes when the received value is a `Right` whose value is an
 object with a subset of properties that match the expected object. The received value must contain
 all of the expected properties, and may contain more than the expected properties.
 
-You can also pass an array of values to match against a received Right value that is an array of
+You can also pass an array of values to match against a received `Right` value that is an array of
 values. In this case, each value in the expected array is compared against the corresponding value
-in the array contained in the received Right. Both arrays must be the same length or the match will
+in the array contained in the received `Right`. Both arrays must be the same length or the match will
 fail.
 
-Note that an empty expected object will match against any received Right whose value is an object.
+Note that an empty expected object will match against any received `Right` whose value is an object.
 
 ### These Matchers
 
 #### .toBeBoth()
 
-Use `.toBeBoth()` to check if a value is a Both.
+Use `.toBeBoth()` to check if a value is a `Both`.
 
 #### .toBeThese()
 
-Use `.toBeThese()` to check if a value is consistent with a These. In other words, this matcher
-confirms that the value is a Left, a Right, or a Both.
+Use `.toBeThese()` to check if a value is consistent with a `These`. In other words, this matcher
+confirms that the value is a `Left`, a `Right`, or a `Both`.
 
-Note that a Left or a Right value is also consistent with an Either and would also pass a
+Note that a `Left` or a `Right` value is also consistent with an `Either` and would also pass a
 `.toBeEither()` test.
 
 #### .toEqualBoth(leftValue, rightValue)
 
-Use `.toEqualBoth(leftValue, rightValue)` to check if a value is a Both that contains a left value
+Use `.toEqualBoth(leftValue, rightValue)` to check if a value is a `Both` that contains a left value
 that equals an expected value, and a right value that equals an expected value. See Jest's
 [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue) documentationfor information about
 how the `.toEqual()` comparison works.
 
 #### .toStrictEqualBoth(leftValue, rightValue)
 
-Use `.toStrictEqualBoth(leftValue, rightValue)` to check if a value is a Both that contains a Left
-value that strictly equals an expected value, and a Right value that strictly equals an expected
+Use `.toStrictEqualBoth(leftValue, rightValue)` to check if a value is a `Both` that contains a left
+value that strictly equals an expected value, and a right value that strictly equals an expected
 value. See Jest's [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue)
 documentation for information about how `.toStrictEqual()` differs from `toEqual()`.
 
 #### .toSubsetEqualBoth(leftValue, rightValue)
 
-Use `.toSubsetEqualBoth(leftValue, rightValue)` to check if a value is a Both whose left and right
+Use `.toSubsetEqualBoth(leftValue, rightValue)` to check if a value is a `Both` whose left and right
 values equal or subset match the expected `leftValue` and `rightValue`. A subset match passes when a
 received value is an object with a subset of properties that match the expected object. The received
 value must contain all of the expected properties, and may contain more than the expected
@@ -269,58 +276,62 @@ Note that an empty expected object will match against any received object.
 
 #### .toBeNone()
 
-Use `.toBeNone()` to check if a value is a None.
+Use `.toBeNone()` to check if a value is a `None`.
 
 #### .toBeOption()
 
-Use `.toBeOption()` to check if a value is a Option (either a Some or a None).
+Use `.toBeOption()` to check if a value is an `Option` (either a `Some` or a `None`).
 
 #### .toBeSome()
 
-Use `.toBeSome()` to check if a value is a Some.
+Use `.toBeSome()` to check if a value is a `Some`.
 
 #### .toEqualSome(value)
 
-Use `.toEqualSome(value)` to check if a value is a Some that contains a value that equals an
+Use `.toEqualSome(value)` to check if a value is a `Some` that contains a value that equals an
 expected value. See Jest's [toEqual(value)](https://jestjs.io/docs/en/expect#toequalvalue)
 documentationfor information about how the `.toEqual()` comparison works.
 
 #### .toStrictEqualSome(value)
 
-Use `.toStrictEqualSome(value)` to check if a value is a Some that contains a value that strictly
+Use `.toStrictEqualSome(value)` to check if a value is a `Some` that contains a value that strictly
 equals an expected value. See Jest's
 [toStrictEqual(value)](https://jestjs.io/docs/en/expect#tostrictequalvalue) documentation for
 information about how `.toStrictEqual()` differs from `toEqual()`.
 
 #### .toSubsetEqualSome(value)
 
-Use `.toSubsetEqualSome(value)` to check if a value is a Some that contains an object with a subset
+Use `.toSubsetEqualSome(value)` to check if a value is a `Some` that contains an object with a subset
 of properties that match the expected object properties. The received value must contain all of the
 expected properties, and may contain more than the expected properties.
 
 ### Decode Matchers
 
-#### .toBeLeftWithErrorsMatching(Array&lt;string | regex>)
+#### .toBeLeftWithErrorsMatching(Array&lt;string | RegExp>)
 
-Use `.toBeLeftWithErrorsMatching(Array<string | regex>)` when testing validation errors returned by
-io-ts `decode()` operations.
+Use `.toBeLeftWithErrorsMatching(Array<string | RegExp>)` when testing validation errors returned by
+`io-ts` `decode()` operations.
 
-An io-ts `decode()` method will return a Left with an array of `ValidationError` objects if the
-supplied value can not be successfully validated and decoded to the specified io-ts type. For codecs
+Note that a `ValidationError` is NOT a standard javascript `Error` object. See
+[.toBeLeftErrorMatching(string | RegExp)](#tobelefterrormatchingstring--regexp) for a matcher that
+works with standard `Error` objects.
+
+An `io-ts` `decode()` method will return a Left with an array of `ValidationError` objects if the
+supplied value can not be successfully validated and decoded to the specified `io-ts` type. For codecs
 that are composed from multiple codecs, multiple errors may be returned as each sub-codec is applied
 to the values it is charged with validating.
 
 This matcher provides an easy way to check if expected validation errors are present. To do this, it
-makes use of the io-ts PathReporter module.
+makes use of the `io-ts` `PathReporter` module.
 
 To use this matcher, supply an array of strings that you expect to be present in the array of
 strings returned by `PathReporter.report()`. You can supply either regular expressions or
 substrings. The matcher will try to match each array entry against the array of
 `Pathreporter.report()` strings.
 
-If the supplied object is not a Left that contains an array of ValidationErrors, or if any of the
-strings you supply cannot be matched to one of the ValidationErrors, the matcher will return
-`false`. If all of the strings you supply are matched, it will return `true`.
+If the supplied object is not a `Left` that contains an array of `ValidationError` objects, or if
+any of the strings you supply cannot be matched to one of the `ValidationError` objects, the matcher
+will return `false`. If all of the strings you supply are matched, it will return `true`.
 
 Example:
 
@@ -338,7 +349,7 @@ test('if the received is a Left that contains errors matching the expected value
 
 **Note:**
 
-This matcher supports the current (stable) io-ts interface. There is a new experimental io-ts
+This matcher supports the current (stable) `io-ts` interface. There is a new experimental `io-ts`
 decoder interface that returns `Either<DecodeError, A>` results instead. This matcher does not
 support that interface.
 
@@ -369,7 +380,7 @@ test('works if called with an asymmetric matcher', () => {
 });
 ```
 
-The `.toBeLeftWithErrorsMatching(Array&lt;string | regex>)` matcher does not accept asymmetric
+The `.toBeLeftWithErrorsMatching(Array<string | RegExp>)` matcher does not accept asymmetric
 matchers. You can use standard jest matchers to achieve similar results like so:
 
 ```ts

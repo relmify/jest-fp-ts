@@ -15,6 +15,10 @@ import {
  * All keys must be present in both objects and no extra keys can be present in
  * either object. However, the check will still succeed when extra keys with
  * undefined values are present.
+ *
+ * NOTE: equals does NOT perform a deep compare on two `Error` objects. Only the `message`
+ * property of an instance of `Error` is considered for equality. Use strictEquals
+ * to compare more strictly.
  */
 export const equals =
   (expected: unknown) =>

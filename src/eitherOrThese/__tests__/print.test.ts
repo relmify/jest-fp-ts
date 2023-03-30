@@ -1,5 +1,10 @@
 import { left, right, both } from 'fp-ts/lib/These';
-import { printReceivedValue, diffReceivedLeft, diffReceivedRight } from '../print';
+import {
+  printReceivedValue,
+  printReceivedLeftErrorValue,
+  diffReceivedLeft,
+  diffReceivedRight,
+} from '../print';
 
 describe('printReceivedValue includes the received value', () => {
   test('if a Left with a string value is received', () => {
@@ -65,6 +70,81 @@ describe('printRecievedValue does not add padding', () => {
   });
   test('if a Both is received and addPadding is false ', () => {
     expect(printReceivedValue(both(1, 2), false)).toEqual(printReceivedValue(both(1, 2)));
+  });
+});
+
+describe('printReceivedLeftErrorValue includes the received value', () => {
+  test('if a Left Error with a string value is received', () => {
+    expect(printReceivedLeftErrorValue(left(new Error('Left value')))).toMatchInlineSnapshot(
+      `Received Left Error: "Left value"`,
+    );
+  });
+  test('if a Left Error with an undefined string value is received', () => {
+    expect(printReceivedLeftErrorValue(left(new Error()))).toMatchInlineSnapshot(
+      `Received Left Error: ""`,
+    );
+  });
+  test('if a Right with an object value is received', () => {
+    const objectRight = right({ id: 1 });
+    expect(printReceivedLeftErrorValue(objectRight)).toMatchInlineSnapshot(
+      `Received Right: {"id": 1}`,
+    );
+  });
+  test('if a Right with a null value is received', () => {
+    expect(printReceivedLeftErrorValue(right(null))).toMatchInlineSnapshot(`Received Right: null`);
+  });
+  test('if a Right with a number value is received', () => {
+    expect(printReceivedLeftErrorValue(right(42))).toMatchInlineSnapshot(`Received Right: 42`);
+  });
+  test('if a Both is received', () => {
+    const aBoth = both('Both Left value', 'Both Right value');
+    expect(printReceivedLeftErrorValue(aBoth)).toMatchInlineSnapshot(`
+      Received Both:
+      Left: "Both Left value"
+      Right: "Both Right value"
+    `);
+  });
+});
+
+describe('printReceivedLeftErrorValue adds padding', () => {
+  test('if a Left Error is received and addPadding is true ', () => {
+    expect(printReceivedLeftErrorValue(left(new Error('Left value')), true)).toMatchInlineSnapshot(
+      `Received Left Error:     "Left value"`,
+    );
+  });
+});
+
+describe('printReceivedLeftErrorValue does not add padding', () => {
+  test('if a Left Error is received and addPadding is false ', () => {
+    expect(printReceivedLeftErrorValue(left(new Error('Left value')), false)).toMatchInlineSnapshot(
+      `Received Left Error: "Left value"`,
+    );
+  });
+  test('if a Left that is not an Error is received and addPadding is true ', () => {
+    expect(printReceivedLeftErrorValue(left('Left value'), true)).toEqual(
+      printReceivedValue(left('Left value')),
+    );
+  });
+  test('if a Left that is not an Error is received and addPadding is false ', () => {
+    expect(printReceivedLeftErrorValue(left('Left value'), false)).toEqual(
+      printReceivedValue(left('Left value')),
+    );
+  });
+  test('if a Right is received and addPadding is true ', () => {
+    expect(printReceivedLeftErrorValue(right('Right value'), true)).toEqual(
+      printReceivedValue(right('Right value')),
+    );
+  });
+  test('if a Right is received and addPadding is false ', () => {
+    expect(printReceivedLeftErrorValue(right('Right value'), false)).toEqual(
+      printReceivedValue(right('Right value')),
+    );
+  });
+  test('if a Both is received and addPadding is true ', () => {
+    expect(printReceivedLeftErrorValue(both(1, 2), true)).toEqual(printReceivedValue(both(1, 2)));
+  });
+  test('if a Both is received and addPadding is false ', () => {
+    expect(printReceivedLeftErrorValue(both(1, 2), false)).toEqual(printReceivedValue(both(1, 2)));
   });
 });
 

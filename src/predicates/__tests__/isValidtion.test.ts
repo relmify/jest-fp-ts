@@ -8,7 +8,7 @@ const person = t.type({
 });
 
 describe('isValidation', () => {
-  test('should return true for the return vale of a successful decode', () => {
+  test('should return true for the return value of a successful decode', () => {
     expect(isValidation(person.decode({ name: 'Nikolai Tesla', id: 1234 }))).toBe(true);
   });
   test('should return true for the return vale of a failed decode', () => {

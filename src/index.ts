@@ -17,6 +17,7 @@ export { matchers };
 export { toBeLeftWithErrorsMatching } from './decodeMatchers/toBeLeftWithErrorsMatching';
 export { toBeEither } from './eitherMatchers/toBeEither';
 export { toBeLeft } from './eitherOrTheseMatchers/toBeLeft';
+export { toBeLeftErrorMatching } from './eitherOrTheseMatchers/toBeLeftErrorMatching';
 export { toBeRight } from './eitherOrTheseMatchers/toBeRight';
 export { toEqualLeft } from './eitherOrTheseMatchers/toEqualLeft';
 export { toEqualRight } from './eitherOrTheseMatchers/toEqualRight';

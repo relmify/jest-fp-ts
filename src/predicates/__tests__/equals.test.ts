@@ -8,6 +8,14 @@ class Message {
     this.message = message;
   }
 }
+class CustomError extends Error {
+  reason: string | undefined;
+  constructor(message: string, reason?: string) {
+    super(message);
+    Object.defineProperty(this, 'name', { value: 'CustomError' });
+    Object.defineProperty(this, 'reason', { value: reason });
+  }
+}
 
 const trueForAllData: Array<Array<any>> = [
   // [message, received, expected]
@@ -61,6 +69,12 @@ const falseForAllData: Array<Array<any>> = [
 
 const falseForStrictEqualsTrueForOthersData: Array<Array<any>> = [
   // [message, received, expected]
+  ['errors with equal messages but different names', new Error('oops'), new CustomError('oops')],
+  [
+    'errors with equal messages but different names and number of properties',
+    new Error('oops'),
+    new CustomError('oops', 'because'),
+  ],
   // eslint-disable-next-line no-sparse-arrays
   ['sparse arrays compared to similar arrays with undefined members', [1, , 3], [1, undefined, 3]],
   [

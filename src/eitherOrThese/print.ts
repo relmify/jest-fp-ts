@@ -1,4 +1,5 @@
 import { EitherOrThese, fold } from './eitherOrThese';
+import { isError } from '../predicates';
 import { printExpected, printReceived, printDiffOrStringify } from 'jest-matcher-utils';
 
 /**
@@ -35,6 +36,29 @@ export function printReceivedLeft(
     () => `Received a Both.`,
   )(received);
 }
+
+/**
+ * Construct a string that shows the received Either or These Left Error value or
+ * prints what was actually received if not a Left Error.
+ *
+ * Optionally add padding to align with a previous `Expected Left Error: not `
+ */
+export function printReceivedLeftErrorValue(
+  received: EitherOrThese<unknown, unknown>,
+  addPadding = false,
+): string {
+  const padding = addPadding ? '    ' : '';
+  return fold(
+    (left) =>
+      isError(left)
+        ? `Received Left Error: ` + padding + `${printReceived(left.message)}`
+        : `Received Left: ` + `${printReceived(left)}`,
+    (right) => `Received Right: ` + `${printReceived(right)}`,
+    (left, right) =>
+      `Received Both:\n` + `Left: ${printReceived(left)}\n` + `Right: ${printReceived(right)}`,
+  )(received);
+}
+
 
 /**
  * Construct a string that either shows the received Right value or indicates that a Left or Both

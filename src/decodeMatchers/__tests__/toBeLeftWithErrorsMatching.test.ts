@@ -152,6 +152,16 @@ describe('.not.toBeLeftWithErrorsMatching should fail', () => {
       Received Errors:     ["Invalid value [\\"Santa\\",\\"Easter\\"] supplied to : { first: string, last: string }/first: string", "Invalid value [\\"Claus\\",\\"Bunny\\"] supplied to : { first: string, last: string }/last: string"]
     `);
   });
+  test('if the received is a Left with errors that match supplied regexes', () => {
+    const arrayName = { first: ['Santa', 'Easter'], last: ['Claus', 'Bunny'] };
+    expect(() => expect(Name.decode(arrayName)).not.toBeLeftWithErrorsMatching([/Easter/, /Bunny/]))
+      .toThrowErrorMatchingInlineSnapshot(`
+      expect(received).not.toBeLeftWithErrorsMatching(expectedErrorsMatching)
+
+      Expected Errors: not [/Easter/, /Bunny/]
+      Received Errors:     ["Invalid value [\\"Santa\\",\\"Easter\\"] supplied to : { first: string, last: string }/first: string", "Invalid value [\\"Claus\\",\\"Bunny\\"] supplied to : { first: string, last: string }/last: string"]
+    `);
+  });
 });
 
 describe('Alternative ways to test validation errors', () => {

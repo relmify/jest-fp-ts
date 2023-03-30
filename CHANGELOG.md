@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2023/03/30
+
+### Added
+
+- `.toBeLeftErrorMatching(string | RegExp)` custom matcher.
+
+### Fixed
+
+- `.toBeLeftWithErrorsMatching(Array<string | RegExp>)` type declaration now correctly specifies
+  `Array<string | RegExp>` instead of `unknown` .
+
+### Changed
+
+- [dev] Updated dependencies to their latest versions.
+
 ## [2.0.2] - 2022/05/05
 
 ### Fixed
@@ -84,12 +99,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A CONTRIBUTING.md file to describe how to contribute.
 - This CHANGELOG.md file to describe notable changes between releases.
 
----
-
-- [2.0.2]: https://github.com/relmify/jest-fp-ts/compare/v2.0.1...v2.0.2
-- [2.0.1]: https://github.com/relmify/jest-fp-ts/compare/v2.0.0...v2.0.1
-- [2.0.0]: https://github.com/relmify/jest-fp-ts/compare/v1.1.1...v2.0.0
-- [1.1.1]: https://github.com/relmify/jest-fp-ts/compare/v1.1.0...v1.1.1
-- [1.1.0]: https://github.com/relmify/jest-fp-ts/compare/v1.0.1...v1.1.0
-- [1.0.1]: https://github.com/relmify/jest-fp-ts/compare/v1.0.0...v1.0.1
-- [1.0.0]: https://github.com/relmify/jest-fp-ts/releases/tag/v1.0.0
+[2.1.0]: https://github.com/relmify/jest-fp-ts/compare/v2.0.2...v2.1.0
+[2.0.2]: https://github.com/relmify/jest-fp-ts/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/relmify/jest-fp-ts/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/relmify/jest-fp-ts/compare/v1.1.1...v2.0.0
+[1.1.1]: https://github.com/relmify/jest-fp-ts/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/relmify/jest-fp-ts/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/relmify/jest-fp-ts/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/relmify/jest-fp-ts/releases/tag/v1.0.0

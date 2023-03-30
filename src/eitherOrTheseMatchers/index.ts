@@ -1,4 +1,5 @@
 import { toBeLeft } from './toBeLeft';
+import { toBeLeftErrorMatching } from './toBeLeftErrorMatching';
 import { toBeRight } from './toBeRight';
 import { toEqualLeft } from './toEqualLeft';
 import { toEqualRight } from './toEqualRight';
@@ -9,6 +10,7 @@ import { toSubsetEqualRight } from './toSubsetEqualRight';
 
 const matchers = {
   toBeLeft,
+  toBeLeftErrorMatching,
   toBeRight,
   toEqualLeft,
   toEqualRight,

@@ -17,17 +17,18 @@ const passMessage = (received: t.Validation<unknown>, expected: Array<string | R
 };
 
 const failMessage = (received: unknown, expected: Array<string | RegExp>) => () => {
+  const hint = matcherHint('.toBeLeftWithErrorsMatching', 'received', 'expectedErrorsMatching');
   return isValidation(received)
     ? isLeft(received)
-      ? matcherHint('.toBeLeftWithErrorsMatching', 'received', 'expectedErrorsMatching') +
+      ? hint +
         '\n\n' +
         `Expected Errors: ${printExpected(expected)}\n` +
         `Received Errors: ${printReceived(PathReporter.report(received))}`
-      : matcherHint('.toBeLeftWithErrorsMatching', 'received', 'expectedErrorsMatching') +
+      : hint +
         '\n\n' +
         `Expected Errors: ${printExpected(expected)}\n` +
         `${printReceivedValue(received)}`
-    : matcherHint('.toBeLeftWithErrorsMatching', 'received', 'expectedErrorsMatching') +
+    : hint +
         '\n\n' +
         'Received value is not a Validation.\n' +
         `Expected Errors: ${printExpected(expected)}\n` +
@@ -101,7 +102,7 @@ declare global {
        *  });
        * ```
        */
-      readonly toBeLeftWithErrorsMatching: (expected: unknown) => R;
+      readonly toBeLeftWithErrorsMatching: (expected: Array<string | RegExp>) => R;
     }
     interface Expect {
       /**
@@ -168,7 +169,7 @@ declare global {
        *  });
        * ```
        */
-      readonly toBeLeftWithErrorsMatching: (expected: unknown) => any;
+      readonly toBeLeftWithErrorsMatching: (expected: Array<string | RegExp>) => any;
     }
   }
 }

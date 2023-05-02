@@ -80,6 +80,19 @@ module.exports = {
 };
 ```
 
+### Setup with vite.config.ts (for [vitest](https://vitest.dev))
+
+```ts
+// vite.config.ts
+export default defineConfig({
+  test: {
+    // ...
+    setupFiles: ['@relmify/jest-fp-ts'],
+    // ...
+  },
+});
+```
+
 ### Typescript Editor Support
 
 If your editor does not recognize the custom `@relmify/jest-fp-ts` matchers, add a `global.d.ts`

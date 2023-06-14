@@ -1,6 +1,6 @@
 {
   "name": "@relmify/jest-fp-ts",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Custom Jest matchers for projects using using fp-ts and io-ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

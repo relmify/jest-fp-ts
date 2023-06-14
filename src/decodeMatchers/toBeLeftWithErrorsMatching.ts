@@ -94,7 +94,7 @@ declare global {
        *  test('Snapshot tests can be used to test full pathReporter output if you prefer', () => {
        *    // Using `@relmify/jest-serializer-strip-ansi` and `jest-snapshot-serializer-raw`
        *    expect(errorStrings).toMatchInlineSnapshot(`
-       *      Array [
+       *      [
        *        Invalid value 1 supplied to : { first: string, last: string }/first: string,
        *        Invalid value undefined supplied to : { first: string, last: string }/last: string,
        *      ]
@@ -161,7 +161,7 @@ declare global {
        *  test('Snapshot tests can be used to test full pathReporter output if you prefer', () => {
        *    // Using `@relmify/jest-serializer-strip-ansi` and `jest-snapshot-serializer-raw`
        *    expect(errorStrings).toMatchInlineSnapshot(`
-       *      Array [
+       *      [
        *        Invalid value 1 supplied to : { first: string, last: string }/first: string,
        *        Invalid value undefined supplied to : { first: string, last: string }/last: string,
        *      ]

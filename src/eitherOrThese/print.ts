@@ -59,7 +59,6 @@ export function printReceivedLeftErrorValue(
   )(received);
 }
 
-
 /**
  * Construct a string that either shows the received Right value or indicates that a Left or Both
  * was received.

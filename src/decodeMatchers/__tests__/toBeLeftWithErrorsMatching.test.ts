@@ -178,7 +178,7 @@ describe('Alternative ways to test validation errors', () => {
   });
   test('Standard snapshot tests can be used to test full pathReporter output', () => {
     expect(errorStrings).toMatchInlineSnapshot(`
-      Array [
+      [
         Invalid value 1 supplied to : { first: string, last: string }/first: string,
         Invalid value undefined supplied to : { first: string, last: string }/last: string,
       ]
@@ -186,13 +186,13 @@ describe('Alternative ways to test validation errors', () => {
   });
   test('Standard snapshot tests can be used to test the raw array of validation errors (verbose!)', () => {
     expect(validation).toMatchInlineSnapshot(`
-      Object {
+      {
         _tag: Left,
-        left: Array [
-          Object {
-            context: Array [
-              Object {
-                actual: Object {
+        left: [
+          {
+            context: [
+              {
+                actual: {
                   first: 1,
                   last: undefined,
                 },
@@ -203,7 +203,7 @@ describe('Alternative ways to test validation errors', () => {
                   encode: [Function],
                   is: [Function],
                   name: { first: string, last: string },
-                  props: Object {
+                  props: {
                     first: StringType {
                       _tag: StringType,
                       decode: [Function],
@@ -224,7 +224,7 @@ describe('Alternative ways to test validation errors', () => {
                   validate: [Function],
                 },
               },
-              Object {
+              {
                 actual: 1,
                 key: first,
                 type: StringType {
@@ -240,10 +240,10 @@ describe('Alternative ways to test validation errors', () => {
             message: undefined,
             value: 1,
           },
-          Object {
-            context: Array [
-              Object {
-                actual: Object {
+          {
+            context: [
+              {
+                actual: {
                   first: 1,
                   last: undefined,
                 },
@@ -254,7 +254,7 @@ describe('Alternative ways to test validation errors', () => {
                   encode: [Function],
                   is: [Function],
                   name: { first: string, last: string },
-                  props: Object {
+                  props: {
                     first: StringType {
                       _tag: StringType,
                       decode: [Function],
@@ -275,7 +275,7 @@ describe('Alternative ways to test validation errors', () => {
                   validate: [Function],
                 },
               },
-              Object {
+              {
                 actual: undefined,
                 key: last,
                 type: StringType {
